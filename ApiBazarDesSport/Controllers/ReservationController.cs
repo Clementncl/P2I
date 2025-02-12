@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
-[Route("api/Reservation")]
+[Route("api/Reservations")]
 public class Reservations : ControllerBase
 {
     private readonly BdsContexte _context;
