@@ -1,6 +1,10 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 public class Materiel
 {
-    public int Id { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; }
     public string Nom { get; set; }
     public double Prix { get; set; }
     private TypeMateriel _type;

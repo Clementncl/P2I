@@ -1,6 +1,6 @@
 public class Reservation
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
     public Utilisateur Utilisateur { get; set; }
     public int UtilisateurID { get; set; }
     public DateTime Date { get; set; }

@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 public class ReservationDTO
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
     public Utilisateur Utilisateur { get; set; }
     public DateTime Date { get; set; }
     public Materiel Materiel { get; set; }

@@ -8,7 +8,7 @@ public enum TypeMateriel
 
 public class MaterielDTO
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
     public string Nom { get; set; } = null!;
     public double Prix { get; set; }
     public TypeMateriel Type { get; set; }

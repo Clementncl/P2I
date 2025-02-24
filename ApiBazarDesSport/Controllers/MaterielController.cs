@@ -1,86 +1,71 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
+[Route("api/materiel")]
 [ApiController]
-[Route("api/Materiels")]
-public class Materiels : ControllerBase
+public class MaterielController : ControllerBase
 {
-    private readonly BdsContexte _context;
+    private readonly IMongoCollection<Materiel> _context;
 
-    public Materiels(BdsContexte context)
+    public MaterielController()
     {
-        _context = context;
+        var client = new MongoClient("mongodb://localhost:5000"); // Modifier l'URL si nécessaire
+        var database = client.GetDatabase("BDS");
+        _context = database.GetCollection<Materiel>("Materiel");
     }
 
-    // GET: api/Materiel
+    // GET: api/materiel
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Materiel>>> GetMateriel()
     {
-        // Get Item
-        var Materiels = _context.Materiel;
-        return await Materiels.ToListAsync();
+        var materiels = await _context.Find(m => true).ToListAsync();
+        return Ok(materiels);
     }
 
-    // GET: api/Materiel/{id}
+    // GET: api/materiel/{id}
     [HttpGet("{id}")]
-    public async Task<ActionResult<Materiel>> GetItem(int id)
+    public async Task<ActionResult<Materiel>> GetItem(string id)
     {
-        // Find a specific personne
-        // SingleAsync() throws an exception if no personne is found (which is possible, depending on id)
-        // SingleOrDefaultAsync() is a safer choice here
-        var Materiel = await _context.Materiel.SingleOrDefaultAsync(t => t.Id == id);
-        if (Materiel == null)
+        var materiel = await _context.Find(m => m.Id == id).FirstOrDefaultAsync();
+        if (materiel == null)
             return NotFound();
-        return Materiel;
+        return Ok(materiel);
     }
 
-    // POST: api/Materiel
+    // POST: api/materiel
     [HttpPost]
-    public async Task<ActionResult<Materiel>> PostItem(Materiel item)
+    public async Task<ActionResult<Materiel>> PostItem([FromBody] Materiel item)
     {
-        /*if (!new[] { "mobilier", "bureautique", "électronique" }.Contains(item.Type))
-        {
-            return BadRequest("Type de Materiel invalide.");
-        }*/
-        _context.Materiel.Add(item);
-        await _context.SaveChangesAsync();
+        await _context.InsertOneAsync(item);
         return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item);
     }
 
-    // PUT: api/Materiel/{id}
+    // PUT: api/materiel/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutItem(int id, Materiel item)
+    public async Task<IActionResult> PutItem(string id, [FromBody] Materiel item)
     {
         if (id != item.Id)
             return BadRequest();
-        /*if (!new[] { "mobilier", "bureautique", "électronique" }.Contains(item.Type))
-        {
-            return BadRequest("Type de Materiel invalide.");
-        }*/
-        _context.Entry(item).State = EntityState.Modified;
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!_context.Materiel.Any(m => m.Id == id))
-                return NotFound();
-            else
-                throw;
-        }
+
+        var result = await _context.ReplaceOneAsync(m => m.Id == id, item);
+        if (result.MatchedCount == 0)
+            return NotFound();
+
         return NoContent();
     }
 
-    // DELETE: api/Materiel/{id}
+    // DELETE: api/materiel/{id}
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteItem(int id)
+    public async Task<IActionResult> DeleteItem(string id)
     {
-        var item = await _context.Materiel.FindAsync(id);
-        if (item == null)
+        var result = await _context.DeleteOneAsync(m => m.Id == id);
+        if (result.DeletedCount == 0)
             return NotFound();
-        _context.Materiel.Remove(item);
-        await _context.SaveChangesAsync();
+
         return NoContent();
     }
 }
+
+
