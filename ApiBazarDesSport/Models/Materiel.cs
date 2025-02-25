@@ -6,7 +6,17 @@ public class Materiel
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
     public string Nom { get; set; }
-    public double Prix { get; set; }
+    private double _prix;
+    public double Prix
+    {
+        get => _prix;
+        set
+        {
+            if (value < 0)
+                throw new ArgumentException("Le prix ne peut pas être négatif.");
+            _prix = value;
+        }
+    }
     private TypeMateriel _type;
     public TypeMateriel Type
     {
@@ -20,6 +30,7 @@ public class Materiel
             _type = value;
         }
     }
+
 
     //Relation avec Reservation
     // public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();

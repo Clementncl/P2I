@@ -1,20 +1,31 @@
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 [Route("api/materiel")]
 [ApiController]
+
 public class MaterielController : ControllerBase
 {
-    private readonly IMongoCollection<Materiel> _context;
 
-    public MaterielController()
+    // private readonly IMongoCollection<Materiel> _context;  // Moi
+
+    // public MaterielController()
+    // {
+    //     var client = new MongoClient("mongodb://localhost:3000"); // Modifier l'URL si nécessaire
+    //     var database = client.GetDatabase("BDS");
+    //     _context = database.GetCollection<Materiel>("Materiel");
+    // }
+    private readonly IMongoCollection<Materiel> _context;  //Chat
+
+    public MaterielController(MongoDBService mongoDBService)
     {
-        var client = new MongoClient("mongodb://localhost:5000"); // Modifier l'URL si nécessaire
-        var database = client.GetDatabase("BDS");
-        _context = database.GetCollection<Materiel>("Materiel");
-    }
+        System.Console.WriteLine("lsjshshssg");
+        _context = mongoDBService.GetCollection<Materiel>("Materiel");
+
+    }                                                      // chat
 
     // GET: api/materiel
     [HttpGet]
