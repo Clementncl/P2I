@@ -1,11 +1,9 @@
 public class Reservation
 {
     public string Id { get; set; }
-    public Utilisateur Utilisateur { get; set; }
-    public int UtilisateurID { get; set; }
+    public string UtilisateurId { get; set; }
     public DateTime Date { get; set; }
-    public Materiel Materiel { get; set; }
-    public int MaterielID { get; set; }
+    public string MaterielId { get; set; }
     public int Quantite { get; set; }
 
 
@@ -14,9 +12,9 @@ public class Reservation
     public Reservation(ReservationDTO reservationDTO)
     {
         Id = reservationDTO.Id;
-        Materiel = reservationDTO.Materiel;
+        MaterielId = reservationDTO.Materiel.Id;
         Date = reservationDTO.Date;
-        Utilisateur = reservationDTO.Utilisateur;
+        UtilisateurId = reservationDTO.Utilisateur.Id;
 
     }
 }

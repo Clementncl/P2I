@@ -1,86 +1,70 @@
-// using Microsoft.AspNetCore.Mvc;
-// using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
-// [ApiController]
-// [Route("api/reservation")]
-// public class ReservationController : ControllerBase
-// {
-//     private readonly BdsContexte _context;
+[ApiController]
+[Route("api/reservation")]
+public class ReservationController : ControllerBase
+{
+     private readonly IMongoCollection<Reservation> _context;  //Chat
 
-//     public ReservationController(BdsContexte context)
-//     {
-//         _context = context;
-//     }
+    public ReservationController(MongoDBService mongoDBService)
+    {
+        System.Console.WriteLine("lsjshshssg");
+        _context = mongoDBService.GetCollection<Reservation>("Reservation");
 
-//     // GET: api/Reservation
-//     [HttpGet]
-//     public async Task<ActionResult<IEnumerable<Reservation>>> GetReservation()
-//     {
-//         // Get Item
-//         var Reservations = _context.Reservation;
-//         return await Reservations.ToListAsync();
-//     }
+    }   
 
-//     // GET: api/Reservation/{id}
-//     [HttpGet("{id}")]
-//     public async Task<ActionResult<Reservation>> GetItem(int id)
-//     {
-//         // Find a specific personne
-//         // SingleAsync() throws an exception if no personne is found (which is possible, depending on id)
-//         // SingleOrDefaultAsync() is a safer choice here
-//         var Reservation = await _context.Reservation.SingleOrDefaultAsync(t => t.Id == id);
-//         if (Reservation == null)
-//             return NotFound();
-//         return Reservation;
-//     }
+    // GET: api/reservation
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Reservation>>> Getreservation()
+    {
+        var reservations = await _context.Find(m => true).ToListAsync();
+        return Ok(reservations);
+    }
 
-//     // POST: api/Reservation
-//     [HttpPost]
-//     public async Task<ActionResult<Reservation>> PostItem(Reservation item)
-//     {
-//         /*if (!new[] { "mobilier", "bureautique", "électronique" }.Contains(item.Type))
-//         {
-//             return BadRequest("Type de Reservation invalide.");
-//         }*/
-//         _context.Reservation.Add(item);
-//         await _context.SaveChangesAsync();
-//         return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item);
-//     }
+    // GET: api/reservation/{id}
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Reservation>> GetItem(string id)
+    {
+        var reservation = await _context.Find(m => m.Id == id).FirstOrDefaultAsync();
+        if (reservation == null)
+            return NotFound();
+        return Ok(reservation);
+    }
 
-//     // PUT: api/Reservation/{id}
-//     [HttpPut("{id}")]
-//     public async Task<IActionResult> PutItem(int id, Reservation item)
-//     {
-//         if (id != item.Id)
-//             return BadRequest();
-//         /*if (!new[] { "mobilier", "bureautique", "électronique" }.Contains(item.Type))
-//         {
-//             return BadRequest("Type de Reservation invalide.");
-//         }*/
-//         _context.Entry(item).State = EntityState.Modified;
-//         try
-//         {
-//             await _context.SaveChangesAsync();
-//         }
-//         catch (DbUpdateConcurrencyException)
-//         {
-//             if (!_context.Reservation.Any(m => m.Id == id))
-//                 return NotFound();
-//             else
-//                 throw;
-//         }
-//         return NoContent();
-//     }
+    // POST: api/reservation
+    [HttpPost]
+    public async Task<ActionResult<Reservation>> PostItem([FromBody] Reservation item)
+    {
+        await _context.InsertOneAsync(item);
+        return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item);
+    }
 
-//     // DELETE: api/Reservation/{id}
-//     [HttpDelete("{id}")]
-//     public async Task<IActionResult> DeleteItem(int id)
-//     {
-//         var item = await _context.Reservation.FindAsync(id);
-//         if (item == null)
-//             return NotFound();
-//         _context.Reservation.Remove(item);
-//         await _context.SaveChangesAsync();
-//         return NoContent();
-//     }
-// }
+    // PUT: api/reservation/{id}
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutItem(string id, [FromBody] Reservation item)
+    {
+        if (id != item.Id)
+            return BadRequest();
+
+        var result = await _context.ReplaceOneAsync(m => m.Id == id, item);
+        if (result.MatchedCount == 0)
+            return NotFound();
+
+        return NoContent();
+    }
+
+    // DELETE: api/reservation/{id}
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteItem(string id)
+    {
+        var result = await _context.DeleteOneAsync(m => m.Id == id);
+        if (result.DeletedCount == 0)
+            return NotFound();
+
+        return NoContent();
+    }
+}

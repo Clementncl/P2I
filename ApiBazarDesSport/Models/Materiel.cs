@@ -32,8 +32,8 @@ public class Materiel
     }
 
 
-    //Relation avec Reservation
-    // public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+    // Relation avec Reservation
+    public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 
     public Materiel() { }
 
@@ -42,14 +42,14 @@ public class Materiel
         Id = MaterielDto.Id;
         Nom = MaterielDto.Nom;
         Prix = MaterielDto.Prix;
-        // Type = MaterielDto.Type;
+        Type = MaterielDto.Type;
 
         // Convertir ReservationDTO en Reservation
-        // Reservations = MaterielDto
-        //     .Reservations.Select(dto => new Reservation
-        //     {
-        //         // A remplir 
-        //     })
-        //     .ToList();
+        Reservations = MaterielDto
+            .Reservations.Select(dto => new Reservation
+            {
+                // A remplir 
+            })
+            .ToList();
     }
 }

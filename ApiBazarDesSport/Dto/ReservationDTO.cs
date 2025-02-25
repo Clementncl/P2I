@@ -12,11 +12,9 @@ public class ReservationDTO
 
     public ReservationDTO(Reservation reservation)
     {
+        Id=reservation.Id;
         Date = reservation.Date;
-        Utilisateur = reservation.Utilisateur;
-        Materiel = reservation.Materiel;
         Quantite = reservation.Quantite;
-
     }
 
 
