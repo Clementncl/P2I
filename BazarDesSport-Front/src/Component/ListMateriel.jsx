@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MaterialCard from "./MaterielCard";
 
-const url = "https://localhost:7274"; // Remplace par ton URL API
+const url = "https://localhost:3000"; // Remplace par ton URL API
 
 export default function ListMaterial() {
   const [materials, setMaterials] = useState([]);

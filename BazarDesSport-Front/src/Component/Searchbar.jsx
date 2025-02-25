@@ -208,10 +208,10 @@ export default function PrimarySearchAppBar() {
             <ListItem button onClick={() => navigate("/acceuil")}> 
               <ListItemText primary="Accueil" />
             </ListItem>
-            <ListItem button>
+            <ListItem button onClick={() => navigate("/equipement")}>
               <ListItemText primary="Équipements" />
             </ListItem>
-            <ListItem button>
+            <ListItem button onClick={() => navigate("/reservation")}>
               <ListItemText primary="Réservations" />
             </ListItem>
             <ListItem button>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function Acceuil()
+export default function Accueil()
  { 
     return (<> rvirvhrzhvrh</>)
 
