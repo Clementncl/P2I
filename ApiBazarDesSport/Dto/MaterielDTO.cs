@@ -1,14 +1,15 @@
 public enum TypeMateriel  // A modifier
 {
     None,
-    Mobilier,
-    Bureautique,
-    Electronique,
+    Ballon,
+    Equipement,
+    Logistique,
 }
 
 public class MaterielDTO
 {
     public string Id { get; set; }
+    public int Stock { get; set; }
     private string _nom;
     public string Nom
     {
@@ -20,7 +21,7 @@ public class MaterielDTO
             _nom = value;
         }
     }
-
+    public bool EstDisponible { get; set; }
     private double _prix;
     public double Prix
     {
@@ -37,14 +38,16 @@ public class MaterielDTO
 
     public MaterielDTO() { }
 
-    public MaterielDTO(Materiel Materiel)
+    public MaterielDTO(Materiel Materiel, bool estDisponible)
     {
         Id = Materiel.Id;
         Nom = Materiel.Nom;
+        Stock = Materiel.Stock;
         Prix = Materiel.Prix;
         Type = Materiel.Type;
+        EstDisponible = estDisponible;
 
         // Conversion des Reservations associées en ReservationDTO
-        //Reservations = Materiel.Reservations.Select(c => new ReservationDTO(c)).ToList();
+        Reservations = Materiel.Reservations.Select(c => new ReservationDTO(c)).ToList();
     }
 }

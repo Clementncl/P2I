@@ -6,7 +6,8 @@ public class Materiel
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
     public string Nom { get; set; }
-    private double _prix;
+    public int Stock {get;set;}
+        private double _prix;
     public double Prix
     {
         get => _prix;
@@ -41,15 +42,15 @@ public class Materiel
     {
         Id = MaterielDto.Id;
         Nom = MaterielDto.Nom;
+        Stock = MaterielDto.Stock;
         Prix = MaterielDto.Prix;
         Type = MaterielDto.Type;
 
         // Convertir ReservationDTO en Reservation
-        Reservations = MaterielDto
-            .Reservations.Select(dto => new Reservation
-            {
-                // A remplir 
-            })
-            .ToList();
+      Reservations = MaterielDto.Reservations?.Select(dto => new Reservation
+{
+    // Remplir les propriétés de Reservation ici
+}).ToList() ?? new List<Reservation>();
+
     }
 }

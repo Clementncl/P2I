@@ -8,14 +8,14 @@ using MongoDB.Driver;
 [Route("api/reservation")]
 public class ReservationController : ControllerBase
 {
-     private readonly IMongoCollection<Reservation> _context;  //Chat
+    private readonly IMongoCollection<Reservation> _context;  //Chat
 
     public ReservationController(MongoDBService mongoDBService)
     {
-        System.Console.WriteLine("lsjshshssg");
+
         _context = mongoDBService.GetCollection<Reservation>("Reservation");
 
-    }   
+    }
 
     // GET: api/reservation
     [HttpGet]

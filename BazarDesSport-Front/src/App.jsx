@@ -1,25 +1,23 @@
-import { useState } from 'react'
 import './App.css'
 import PrimarySearchAppBar from './Component/Searchbar'
-import MaterialCard from './Component/MaterielCard'
-import { Route, Router, Routes } from 'react-router-dom'
-import Acceuil from './Pages/Accueil'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Accueil from './Pages/Accueil'
 import Equipement from './Pages/Equipement'
+import Reservation from './Pages/Reservation'
 function App() {
  
 
   return (
     <Router>
+         {/* definition Header présent sur toutes les pages  */}
+      <PrimarySearchAppBar/>
+
     {/* definition Routes  */}
     <Routes>
       <Route path="/accueil" element={<Accueil />} />
       <Route path="/equipement" element={<Equipement />} />
-      {/* <Route path="/statistiques" element={<Cocktail />} /> */}
-
+      <Route path="/reservation" element={<Reservation/>} />
     </Routes>
-
-   <><PrimarySearchAppBar/>
-   <MaterialCard/></>
 
    </Router>
   )

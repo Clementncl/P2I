@@ -1,28 +1,31 @@
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuration MongoDB
 builder.Services.Configure<MongoDBService>(
     builder.Configuration.GetSection("MongoDB"));
 
-// Services configuration
+// Ajout des services
 builder.Services.AddControllers();
 builder.Services.AddSingleton<MongoDBService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// ConfigureServices
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp",
-        builder => builder
-            .WithOrigins("http://localhost:3000")
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
 });
 
 var app = builder.Build();
 
-// Middleware pipeline
+// ✅ Middleware CORS AVANT tout le reste
+app.UseCors("AllowAll");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -30,12 +33,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseExceptionHandler("/error");
+
 app.UseRouting();
-app.UseCors("AllowReactApp");
+app.UseAuthorization(); // Facultatif si pas d'authentification
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+app.MapControllers();
 
-app.Run("http://localhost:3000");
+// ✅ Lancement de l'API sur un port différent de React
+app.Run("http://localhost:5039");

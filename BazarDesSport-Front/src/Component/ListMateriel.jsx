@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import MaterialCard from "./MaterielCard";
 
-const url = "https://localhost:3000"; // Remplace par ton URL API
+const url =  "http://localhost:5039/api/materiel"; 
 
 export default function ListMaterial() {
   const [materials, setMaterials] = useState([]);
@@ -14,14 +14,17 @@ export default function ListMaterial() {
   }, []);
 
   return (
-    <>
+    
+    <div style={{ display: "flex", flexWrap: "wrap",  gap: "20px" }}>
       {materials.map((material) => (
-        <MaterialCard
-          key={material.id} // Utilisation correcte de l'id
-          nom={material.nom}
-          image={material.image}
-        />
+       <MaterialCard 
+       key={material.id || material._id}
+       nom={material.nom} 
+       image={material.image || "default.jpg"} 
+       stock={material.stock} 
+       
+     />
       ))}
-    </>
+    </div>
   );
 }
