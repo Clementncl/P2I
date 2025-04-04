@@ -18,12 +18,13 @@ export default function ListMaterial() {
     <div style={{ display: "flex", flexWrap: "wrap",  gap: "20px" }}>
       {materials.map((material) => (
        <MaterialCard 
-       key={material.id || material._id}
+       key={material.id}
+       id={material.id}
        nom={material.nom} 
-       image={material.image || "default.jpg"} 
+       image={material.image} 
        stock={material.stock} 
-       
      />
+     
       ))}
     </div>
   );

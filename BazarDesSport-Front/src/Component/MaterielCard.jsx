@@ -8,6 +8,10 @@ import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
 import SwipeableEdgeDrawer from "./Swipeableedge";
 
+const idUtilisateur = localStorage.getItem("userId");
+const id = localStorage.getItem("userId");
+
+
 export default function MaterialCard({ nom, image, stock }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -24,7 +28,8 @@ export default function MaterialCard({ nom, image, stock }) {
       </CardActionArea>
       <CardActions>
         
-         <SwipeableEdgeDrawer/>
+      <SwipeableEdgeDrawer materielId={id} utilisateurId={idUtilisateur} />
+
        
       </CardActions>
     </Card>

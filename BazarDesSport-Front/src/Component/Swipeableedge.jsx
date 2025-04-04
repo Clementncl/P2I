@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
@@ -6,25 +7,20 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import TextField from '@mui/material/TextField';
 
 const drawerBleeding = 56;
 
+// eslint-disable-next-line no-unused-vars
 const Root = styled('div')(({ theme }) => ({
   height: '100%',
   backgroundColor: grey[100],
-  ...theme.applyStyles('dark', {
-    backgroundColor: theme.palette.background.default,
-  }),
 }));
 
 const StyledBox = styled('div')(({ theme }) => ({
   backgroundColor: '#fff',
-  ...theme.applyStyles('dark', {
-    backgroundColor: grey[800],
-  }),
 }));
 
 const Puller = styled('div')(({ theme }) => ({
@@ -35,21 +31,45 @@ const Puller = styled('div')(({ theme }) => ({
   position: 'absolute',
   top: 8,
   left: 'calc(50% - 15px)',
-  ...theme.applyStyles('dark', {
-    backgroundColor: grey[900],
-  }),
 }));
 
-function SwipeableEdgeDrawer(props) {
-  const { window } = props;
+function SwipeableEdgeDrawer({ window, materielId, utilisateurId }) {
   const [open, setOpen] = React.useState(false);
+  const [date, setDate] = React.useState('');
+  const [quantite, setQuantite] = React.useState(1);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
-  // This is used only for the example
   const container = window !== undefined ? () => window().document.body : undefined;
+
+  const handleReservation = async () => {
+    try {
+      const response = await fetch("http://localhost:5039/api/reservation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          materielId,
+          utilisateurId,
+          date,
+          quantite: parseInt(quantite),
+        }),
+      });
+
+      if (response.ok) {
+        alert("Réservation réussie !");
+        setOpen(false);
+      } else {
+        alert("Erreur lors de la réservation.");
+      }
+    } catch (error) {
+      console.error("Erreur :", error);
+      alert("Erreur réseau.");
+    }
+  };
 
   return (
     <Root>
@@ -87,10 +107,30 @@ function SwipeableEdgeDrawer(props) {
           }}
         >
           <Puller />
-          <Typography sx={{ p: 2, color: 'white' }}> . </Typography>
+       
         </StyledBox>
+
         <StyledBox sx={{ px: 2, pb: 2, height: '100%', overflow: 'auto' }}>
-          <Skeleton variant="rectangular" height="100%" />
+          <TextField
+            label="Date"
+            type="date"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            sx={{ my: 2 }}
+          />
+          <TextField
+            label="Quantité"
+            type="number"
+            fullWidth
+            value={quantite}
+            onChange={(e) => setQuantite(e.target.value)}
+            sx={{ my: 2 }}
+          />
+          <Button variant="contained" fullWidth onClick={handleReservation}>
+            Confirmer la réservation
+          </Button>
         </StyledBox>
       </SwipeableDrawer>
     </Root>
@@ -98,11 +138,9 @@ function SwipeableEdgeDrawer(props) {
 }
 
 SwipeableEdgeDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
+  materielId: PropTypes.string.isRequired,
+  utilisateurId: PropTypes.string.isRequired,
 };
 
 export default SwipeableEdgeDrawer;

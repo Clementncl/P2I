@@ -13,4 +13,5 @@
  2) npm install
  3) npm install @mui/material @emotion/react @emotion/styled @mui/styled-engine-sc styled-components @mui/icons-material
  4) npm install react-router-dom
+ 6) npm install react-calendar
  5) npm run dev

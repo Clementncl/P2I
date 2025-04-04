@@ -17,7 +17,7 @@ public class ReservationController : ControllerBase
 
     }
 
-    // GET: api/reservation
+    // GET: api/reservation/all
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Reservation>>> Getreservation()
     {
@@ -25,7 +25,7 @@ public class ReservationController : ControllerBase
         return Ok(reservations);
     }
 
-    // GET: api/reservation/{id}
+    // // GET: api/reservation/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<Reservation>> GetItem(string id)
     {
@@ -34,6 +34,27 @@ public class ReservationController : ControllerBase
             return NotFound();
         return Ok(reservation);
     }
+
+    // GET: api/reservation/Mensuelle?mois=1&an=2025
+[HttpGet("Mensuelle")]
+public async Task<ActionResult<IEnumerable<Reservation>>> GetReservationsMensuelle(int mois, int an)
+{
+    // Filtrer les réservations du mois et de l'anné
+    var debutDuMois = new DateTime(an, mois, 1);
+    var finDuMois = debutDuMois.AddMonths(1).AddDays(-1);
+
+    var reservations = await _context.Find(r =>
+        r.Date >= debutDuMois && r.Date <= finDuMois
+    ).ToListAsync();
+
+    if (reservations.Count == 0)
+    {
+        return NotFound("Aucune réservation pour ce mois.");
+    }
+
+    return Ok(reservations);
+}
+
 
     // POST: api/reservation
     [HttpPost]
@@ -68,3 +89,6 @@ public class ReservationController : ControllerBase
         return NoContent();
     }
 }
+
+
+
