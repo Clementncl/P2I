@@ -4,7 +4,7 @@ public class Materiel
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
+    public string? Id { get; set; }
     public string Nom { get; set; }
     public int Stock {get;set;}
         private double _prix;
@@ -40,7 +40,6 @@ public class Materiel
 
     public Materiel(MaterielDTO MaterielDto)
     {
-        Id = MaterielDto.Id;
         Nom = MaterielDto.Nom;
         Stock = MaterielDto.Stock;
         Prix = MaterielDto.Prix;

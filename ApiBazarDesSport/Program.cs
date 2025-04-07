@@ -23,7 +23,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// ✅ Middleware CORS AVANT tout le reste
+
 app.UseCors("AllowAll");
 
 if (app.Environment.IsDevelopment())

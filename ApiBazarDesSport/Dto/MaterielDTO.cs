@@ -1,4 +1,4 @@
-public enum TypeMateriel  // A modifier
+public enum TypeMateriel
 {
     None,
     Ballon,
@@ -8,7 +8,7 @@ public enum TypeMateriel  // A modifier
 
 public class MaterielDTO
 {
-    public string Id { get; set; }
+    public string? Id { get; set; }
     public int Stock { get; set; }
     private string _nom;
     public string Nom
@@ -40,7 +40,7 @@ public class MaterielDTO
 
     public MaterielDTO(Materiel Materiel, bool estDisponible)
     {
-        Id = Materiel.Id;
+        Id=Materiel.Id;
         Nom = Materiel.Nom;
         Stock = Materiel.Stock;
         Prix = Materiel.Prix;
