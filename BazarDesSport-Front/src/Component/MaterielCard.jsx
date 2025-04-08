@@ -9,12 +9,21 @@ import CardActions from "@mui/material/CardActions";
 import { Button, Box } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+import SwipeableEdgeDrawer from "./Swipeableedge";
 
-// import { Button } from "@mui/material";
 export default function MaterialCard({ id, nom, image, stock }) {
   const [showEdit, setShowEdit] = useState(false);
   const [newStock, setNewStock] = useState(stock);
-  console.log(image)
+  const [openReservation, setOpenReservation] = useState(false);
+
+  // Fonction pour ouvrir le drawer de réservation
+  const handleReservationOpen = () => {
+    setOpenReservation(true);
+  };
+
+  const handleReservationClose = () => {
+    setOpenReservation(false);
+  };
 
   // Fonction PUT pour modifier le stock
   const handleEditStock = async () => {
@@ -44,7 +53,7 @@ export default function MaterialCard({ id, nom, image, stock }) {
 
   // Fonction DELETE pour supprimer le matériel
   const handleDelete = async () => {
-    if(!window.confirm("Voulez-vous vraiment supprimer ce matériel ?")) return;
+    if (!window.confirm("Voulez-vous vraiment supprimer ce matériel ?")) return;
 
     try {
       const response = await fetch(`http://localhost:5039/api/materiel/${id}`, {
@@ -52,7 +61,7 @@ export default function MaterialCard({ id, nom, image, stock }) {
       });
       if (response.ok) {
         alert("Matériel supprimé !");
-        window.location.reload(); 
+        window.location.reload();
       } else {
         alert("Erreur lors de la suppression");
       }
@@ -65,6 +74,7 @@ export default function MaterialCard({ id, nom, image, stock }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
+        {console.log("image",image)}
         <CardMedia component="img" height="140" image={image} alt={nom} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -75,53 +85,80 @@ export default function MaterialCard({ id, nom, image, stock }) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-  {/* Boutons "Modifier" et "Supprimer" */}
-  {!showEdit && (
-    <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end", width: "100%" }}>
-      <Button
+      <CardActions sx={{ flexDirection: "column", alignItems: "stretch", gap: 1 }}>
+        
+        {!showEdit && (
+          <Button
+            onClick={handleReservationOpen}
+            variant="contained"
+            color="primary"
+            sx={{ width: "100%" }}
+          >
+            Réserver
+          </Button>
+        )}
+
+        {/* Boutons "Modifier" et "Supprimer" en dessous (affichés si pas en mode édition) */}
+        {!showEdit && (
+          <Box sx={{ display: "flex", gap: 1, justifyContent: "normal", width: "100%" }}>
+            <Button
+              onClick={() => setShowEdit(true)}
+              startIcon={<ModeEditOutlineIcon />}
+              variant="text"
+              sx={{ backgroundColor: "#7e57c2", fontSize: "0.8rem", color: "white", width: "130px" }}
+            >
+              Modifier le stock
+            </Button>
+            <Button
+              onClick={handleDelete}
+              color="error"
+              variant="contained"
+              startIcon={<DeleteIcon />}
+              sx={{ fontSize: "0.75rem", width: "130px" }} 
+            >
+              Supprimer
+            </Button>
+          </Box>
+        )}
+
+        {/* Affichage de l'édition du stock */}
+        {showEdit && (
+          <Box sx={{ display: "flex", gap: 1, alignItems: "center", width: "100%" }}>
+            <input
+              type="number"
+              value={newStock}
+              onChange={(e) => setNewStock(e.target.value)}
+              style={{ width: "80px" }}
+            />
+            <Button
+              onClick={handleEditStock}
+              variant="contained"
+              sx={{ backgroundColor: "#7e57c2", fontSize: "0.8rem", color: "white" }}
+            >
+              OK
+            </Button>
+            <Button
+              onClick={() => setShowEdit(false)}
+              variant="contained"
+              color="error"
+              sx={{ fontSize: "0.8rem" }}
+            >
+              Annuler
+            </Button>
+          </Box>
+        )}
+      </CardActions>
       
-        onClick={() => setShowEdit(true)}
-        startIcon={<ModeEditOutlineIcon />}
-        variant="text"
-        sx={{ backgroundColor: '#7e57c2' , fontSize: '0.8rem' , color:"white"}}
-      >
-        Modifier le stock
-      </Button>
-
-      <Button
-        onClick={handleDelete}
-        color="error"
-        variant="contained"
-        startIcon={<DeleteIcon />}
-        sx={{ fontSize: '0.75rem' }}
-      >
-        Supprimer
-      </Button>
-    </Box>
-  )}
-
-  {/* Affichage de l'édition du stock */}
-  {showEdit && (
-    <>
-      <input
-        type="number"
-        value={newStock}
-        onChange={(e) => setNewStock(e.target.value)}
-        style={{ width: "80px" }}
-      />
-      <Button onClick={handleEditStock}  variant="contained"
-        sx={{ backgroundColor: '#7e57c2' , fontSize: '0.8rem' , color:"white"}}>OK</Button>
-      <Button onClick={() => setShowEdit(false)} variant="contained" color="error"
-        sx={{fontSize: '0.8rem'}}>Annuler</Button>
-    </>
-  )}
-</CardActions>
-
+      {openReservation && (
+        <SwipeableEdgeDrawer
+          materielId={id}
+          utilisateurId={localStorage.getItem("userId") || ""}
+          onClose={handleReservationClose}
+        />
+      )}
     </Card>
   );
 }
-
 
 MaterialCard.propTypes = {
   id: PropTypes.string.isRequired,

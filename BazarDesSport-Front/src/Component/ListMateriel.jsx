@@ -12,12 +12,15 @@ export default function ListMaterial() {
       .then((data) => setMaterials(data || []))
       .catch((error) => console.error("Erreur lors du chargement :", error));
   }, []);
-
+console.log("materials",materials)
   return (
     
     <div style={{ display: "flex", flexWrap: "wrap",  gap: "20px" }}>
+      
       {materials.map((material) => (
+        console.log("image test",material.image),
        <MaterialCard 
+       
        key={material.id}
        id={material.id}
        nom={material.nom} 
