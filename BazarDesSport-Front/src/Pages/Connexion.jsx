@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {  Stack, Paper,Typography,Container,TextField,Box,Link,Button} from "@mui/material";
+import TitrePage from "../Component/TitrePage";
 export default function Connexion() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,9 +35,7 @@ export default function Connexion() {
 
     <Container component="main" maxWidth="xs" sx={{ mt: 8,}}>
       <Paper elevation={3} sx={{ p: 3 , borderRadius: 4, backgroundColor: '#f5f5f5' }}>
-        <Typography variant="h5" component="h1" gutterBottom>
-          Connexion
-        </Typography>
+          <TitrePage titre="Connexion"/>  
         <Stack spacing={2}>
           <TextField
             label="Email"

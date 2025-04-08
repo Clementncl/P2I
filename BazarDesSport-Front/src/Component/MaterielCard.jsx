@@ -6,6 +6,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
+import { Button, Box } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+
 // import { Button } from "@mui/material";
 export default function MaterialCard({ id, nom, image, stock }) {
   const [showEdit, setShowEdit] = useState(false);
@@ -71,32 +75,50 @@ export default function MaterialCard({ id, nom, image, stock }) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        {/* Bouton pour modifier le stock */}
-        {!showEdit && (
-          <button onClick={() => setShowEdit(true)}>Modifier le stock</button>
-        )}
+  {/* Boutons "Modifier" et "Supprimer" */}
+  {!showEdit && (
+    <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end", width: "100%" }}>
+      <Button
+      
+        onClick={() => setShowEdit(true)}
+        startIcon={<ModeEditOutlineIcon />}
+        variant="text"
+        sx={{ backgroundColor: '#7e57c2' , fontSize: '0.8rem' , color:"white"}}
+      >
+        Modifier le stock
+      </Button>
 
-        {showEdit && (
-          <>
-            <input
-              type="number"
-              value={newStock}
-              onChange={(e) => setNewStock(e.target.value)}
-              style={{ width: "80px" }}
-            />
-            <button onClick={handleEditStock}>OK</button>
-            <button onClick={() => setShowEdit(false)}>Annuler</button>
-          </>
-        )}
+      <Button
+        onClick={handleDelete}
+        color="error"
+        variant="contained"
+        startIcon={<DeleteIcon />}
+        sx={{ fontSize: '0.75rem' }}
+      >
+        Supprimer
+      </Button>
+    </Box>
+  )}
 
-        {/* Bouton pour supprimer */}
-        <button onClick={handleDelete} style={{ marginLeft: "auto" }}>
-          Supprimer
-        </button>
-      </CardActions>
+  {/* Affichage de l'édition du stock */}
+  {showEdit && (
+    <>
+      <input
+        type="number"
+        value={newStock}
+        onChange={(e) => setNewStock(e.target.value)}
+        style={{ width: "80px" }}
+      />
+      <button onClick={handleEditStock}>OK</button>
+      <button onClick={() => setShowEdit(false)}>Annuler</button>
+    </>
+  )}
+</CardActions>
+
     </Card>
   );
 }
+
 
 MaterialCard.propTypes = {
   id: PropTypes.string.isRequired,

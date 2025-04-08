@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {  Stack, Paper,Typography,Container,TextField,Box,Link,Button} from "@mui/material";
+import TitrePage from "../Component/TitrePage";
 
 export default function Inscription() {
   const [nom, setNom] = useState("");
@@ -42,9 +43,7 @@ export default function Inscription() {
   return (
     <Container component="main" maxWidth="xs" sx={{ mt: 8,}}>
       <Paper elevation={3} sx={{ p: 3 , borderRadius: 4, backgroundColor: '#f5f5f5' }}>
-        <Typography variant="h5" component="h1" gutterBottom>
-          Inscription
-        </Typography>
+         <TitrePage titre="Inscription"/> 
         <Stack spacing={2}>
         <TextField
             label="Nom"
