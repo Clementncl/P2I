@@ -14,6 +14,7 @@ import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 export default function MaterialCard({ id, nom, image, stock }) {
   const [showEdit, setShowEdit] = useState(false);
   const [newStock, setNewStock] = useState(stock);
+  console.log(image)
 
   // Fonction PUT pour modifier le stock
   const handleEditStock = async () => {
@@ -109,8 +110,10 @@ export default function MaterialCard({ id, nom, image, stock }) {
         onChange={(e) => setNewStock(e.target.value)}
         style={{ width: "80px" }}
       />
-      <button onClick={handleEditStock}>OK</button>
-      <button onClick={() => setShowEdit(false)}>Annuler</button>
+      <Button onClick={handleEditStock}  variant="contained"
+        sx={{ backgroundColor: '#7e57c2' , fontSize: '0.8rem' , color:"white"}}>OK</Button>
+      <Button onClick={() => setShowEdit(false)} variant="contained" color="error"
+        sx={{fontSize: '0.8rem'}}>Annuler</Button>
     </>
   )}
 </CardActions>

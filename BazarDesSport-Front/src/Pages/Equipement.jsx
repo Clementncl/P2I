@@ -20,6 +20,7 @@ export default function Equipement() {
   const [newStock, setNewStock] = useState(0);
   const [newPrix, setNewPrix] = useState(0);
   const [newType, setNewType] = useState(TypeMateriel.None);
+  const [newImage, setNewImage] = useState("");
 
   // Appel API pour ajouter un nouveau matériel
   const handleAddMaterial = async (e) => {
@@ -37,6 +38,7 @@ export default function Equipement() {
           stock: parseInt(newStock),
           prix: parseFloat(newPrix),
           type: parseInt(newType), 
+          image:  newImage.trim() !== "" ? newImage : null,
         }),
       });
 
@@ -122,6 +124,15 @@ export default function Equipement() {
                 value={newPrix}
                 onChange={(e) => setNewPrix(e.target.value)}
                 required
+              />
+            </div>
+            <div>
+              <label>image : </label>
+              <input
+                type="text"
+                value={newImage || "BazarDesSport-Front/public/image/LogoBDS.png"}
+                onChange={(e) => setNewImage(e.target.value)}
+                
               />
             </div>
 

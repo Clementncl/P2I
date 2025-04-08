@@ -6,6 +6,7 @@ public class Materiel
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
     public string Nom { get; set; }
+    public string? Image{get;set;}
     public int Stock {get;set;}
         private double _prix;
     public double Prix
@@ -44,6 +45,7 @@ public class Materiel
         Stock = MaterielDto.Stock;
         Prix = MaterielDto.Prix;
         Type = MaterielDto.Type;
+        Image=MaterielDto.Image;
 
         // Convertir ReservationDTO en Reservation
       Reservations = MaterielDto.Reservations?.Select(dto => new Reservation

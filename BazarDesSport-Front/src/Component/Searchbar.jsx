@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-// import InputBase from '@mui/material/InputBase';
+import { useLocation, useNavigate } from "react-router-dom";
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -18,7 +18,6 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { useNavigate } from "react-router-dom";
 import ListItemButton from '@mui/material/ListItemButton';
 
 
@@ -28,7 +27,20 @@ export default function PrimarySearchAppBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [openDrawer, setOpenDrawer] = React.useState(false); // État pour gérer le sidebar
   const navigate = useNavigate(); // pour pouvoir utiliser la navigation plus tard dans le code 
-
+  const location = useLocation();
+  
+  if (location.pathname === "/connexion" || location.pathname === "/inscription") {
+    return (
+      <AppBar position="static"  sx={{ backgroundColor: '#7e57c2'  }}>
+        <Toolbar>
+          <Typography variant="h6" noWrap component="div"  sx={{ display: { xs: 'none', sm: 'block'  } }}>
+            Bazar Des Sports
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    );
+  }
+  
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -48,6 +60,13 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleDeconnexion = () => {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userNom");
+    localStorage.removeItem("userPrenom");
+    handleMenuClose(); // Ferme le menu
+    navigate("/connexion");}
 
   // Fonctions pour ouvrir/fermer le sidebar
   const toggleDrawer = (state) => () => {
@@ -71,8 +90,7 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profil</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Déconnexion</MenuItem>
+      <MenuItem onClick={handleDeconnexion}>Déconnexion</MenuItem>
     </Menu>
   );
 

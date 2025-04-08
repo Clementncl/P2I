@@ -10,6 +10,7 @@ public class MaterielDTO
 {
     public string? Id { get; set; }
     public int Stock { get; set; }
+    public string? Image{get;set;}
     private string _nom;
     public string Nom
     {
@@ -46,6 +47,8 @@ public class MaterielDTO
         Prix = Materiel.Prix;
         Type = Materiel.Type;
         EstDisponible = estDisponible;
+        Image = Materiel.Image;
+
 
         // Conversion des Reservations associées en ReservationDTO
         Reservations = Materiel.Reservations.Select(c => new ReservationDTO(c)).ToList();
