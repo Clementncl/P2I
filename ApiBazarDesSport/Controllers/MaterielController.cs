@@ -37,6 +37,7 @@ public class MaterielController : ControllerBase
         return Ok(materielsDto);
     }
 
+
     // GET: api/materiel/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<MaterielDTO>> GetItem(string id)

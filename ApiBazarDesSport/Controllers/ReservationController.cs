@@ -35,22 +35,21 @@ public class ReservationController : ControllerBase
         return Ok(reservation);
     }
 
-    // GET: api/reservation/Mensuelle?mois=1&an=2025
+// GET: api/reservation/Mensuelle?mois=1&an=2025
 [HttpGet("Mensuelle")]
 public async Task<ActionResult<IEnumerable<Reservation>>> GetReservationsMensuelle(int mois, int an)
 {
-    // Filtrer les réservations du mois et de l'anné
-    var debutDuMois = new DateTime(an, mois, 1);
-    var finDuMois = debutDuMois.AddMonths(1).AddDays(-1);
+    // Calcule début / fin du mois
+    var start = new DateTime(an, mois, 1);
+    var end = start.AddMonths(1).AddDays(-1);
 
-    var reservations = await _context.Find(r =>
-        r.Date >= debutDuMois && r.Date <= finDuMois
-    ).ToListAsync();
+    // Filtrer par date
+    var reservations = await _context
+        .Find(r => r.Date >= start && r.Date <= end)
+        .ToListAsync();
 
     if (reservations.Count == 0)
-    {
-        return NotFound("Aucune réservation pour ce mois.");
-    }
+        return Ok(new List<Reservation>()); // renvoie un tableau vide s'il n'y en a pas
 
     return Ok(reservations);
 }

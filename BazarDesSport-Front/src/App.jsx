@@ -6,6 +6,7 @@ import Equipement from './Pages/Equipement'
 import Reservation from './Pages/Reservation'
 import Connexion from './Pages/Connexion';
 import Inscription from './Pages/Inscription';
+import ValidationDemandes from './Pages/ValidationDemandes';
 function App() {
  
 
@@ -21,6 +22,7 @@ function App() {
       <Route path="/reservation" element={<Reservation/>} />
       <Route path="/connexion" element={<Connexion/>} />
       <Route path="/inscription" element={<Inscription/>} />
+      <Route path="/ValidationDemandes" element={<ValidationDemandes/>} />
     </Routes>
 
    </Router>

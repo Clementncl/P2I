@@ -56,7 +56,7 @@ export default function PrimarySearchAppBar() {
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
-    <Menu
+    <Menu 
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: 'top',
@@ -104,7 +104,7 @@ export default function PrimarySearchAppBar() {
       <MenuItem>
         <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
           <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
+            <NotificationsIcon/>
           </Badge>
         </IconButton>
         <p>Notifications</p>
@@ -126,7 +126,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1, }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: '#7e57c2' }}>
         <Toolbar>
           {/* Bouton Menu avec sidebar */}
           <IconButton size="large" edge="start" color="inherit" onClick={toggleDrawer(true)}>
@@ -143,7 +143,7 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={3} color="error">
-                <NotificationsIcon />
+                <NotificationsIcon onClick={() => navigate("/ValidationDemandes")}/>
               </Badge>
             </IconButton>
             <IconButton size="large" edge="end" aria-label="account of current user" aria-controls={menuId} aria-haspopup="true" onClick={handleProfileMenuOpen} color="inherit">

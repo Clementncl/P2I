@@ -15,15 +15,16 @@ export default function Reservation() {
     const response = await fetch(`http://localhost:5039/api/reservation/Mensuelle?mois=${month}&an=${year}`);
     const data = await response.json();
     setReservations(data);
- 
+
   
-  // Convertir la date en objet Date pour chaque réservation
+  // Convertion de la date en objet Date pour chaque réservation
+  console.log(reservations)
   const reservationsWithDate = data.map(reservation => ({
    ...reservation,
-   Date: new Date(reservation.Date) // Conversion du format ISO en Date pour le front
+   Date: new Date(reservation.Date) // Conversion du format de la date pour le front
  }));
  setReservations(reservationsWithDate);
-
+console.log(reservations)
  const validReservations = reservationsWithDate.filter(reservation => !isNaN(reservation.Date.getTime()));
  setReservations(validReservations);
 };

@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import {  Stack, Paper,Typography,Container,TextField,Box,Link,Button} from "@mui/material";
 export default function Connexion() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,24 +31,52 @@ export default function Connexion() {
   };
 
   return (
-    <div>
-      <h2>Connexion</h2>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <br />
-      <input
-        type="password"
-        placeholder="Mot de passe"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <br />
-      <button onClick={handleLogin}>Se connecter</button>
-      <p>  Pas encore inscrit ? <a href="/inscription">Créer un compte</a> </p>
-    </div>
+
+    <Container component="main" maxWidth="xs" sx={{ mt: 8,}}>
+      <Paper elevation={3} sx={{ p: 3 , borderRadius: 4, backgroundColor: '#f5f5f5' }}>
+        <Typography variant="h5" component="h1" gutterBottom>
+          Connexion
+        </Typography>
+        <Stack spacing={2}>
+          <TextField
+            label="Email"
+            type="email"
+            variant="outlined"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+          />
+          <TextField
+            label="Mot de passe"
+            type="password"
+            variant="outlined"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+          />
+
+          <Button variant="contained" onClick={handleLogin} fullWidth   sx={{
+    backgroundColor: '#7e57c2', 
+    color: '#000',
+    borderRadius: 3,
+    '&:hover': {
+      backgroundColor: '#d8d8f0', 
+    },
+  }}>
+            Se connecter
+          </Button>
+
+          <Box textAlign="center">
+            <Typography variant="body2">
+              Pas encore inscrit ?{" "}
+              <Link href="/inscription" underline="hover">
+                Créer un compte
+              </Link>
+            </Typography>
+          </Box>
+        </Stack>
+      </Paper>
+    </Container>
+
   );
 }

@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 public class Utilisateur
 {
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     public string Nom { get; set; }
     public string Prénom { get; set; }
