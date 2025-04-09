@@ -39,20 +39,18 @@ public class ReservationController : ControllerBase
 [HttpGet("Mensuelle")]
 public async Task<ActionResult<IEnumerable<Reservation>>> GetReservationsMensuelle(int mois, int an)
 {
-    // Calcule début / fin du mois
+    // Début du mois courant
     var start = new DateTime(an, mois, 1);
-    var end = start.AddMonths(1).AddDays(-1);
+    // Début du mois suivant
+    var end = start.AddMonths(1);
 
-    // Filtrer par date
     var reservations = await _context
-        .Find(r => r.Date >= start && r.Date <= end)
+        .Find(r => r.Date >= start && r.Date < end)
         .ToListAsync();
-
-    if (reservations.Count == 0)
-        return Ok(new List<Reservation>()); // renvoie un tableau vide s'il n'y en a pas
 
     return Ok(reservations);
 }
+
 
 
     // POST: api/reservation

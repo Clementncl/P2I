@@ -49,7 +49,7 @@ export default function MaterialCard({ id, nom, image, stock }) {
     }
   };
 
-  // Fonction DELETE pour supprimer le matériel
+  // Fonction de suppression de matériel
   const handleDelete = async () => {
     if (!window.confirm("Voulez-vous vraiment supprimer ce matériel ?")) return;
 
