@@ -22,7 +22,7 @@ export default function Inscription() {
         },
         body: JSON.stringify({
           nom: nom,
-          prénom: prenom,
+          Prenom: prenom,
           email: email,
           passwordHash: motDePasse, 
         }),

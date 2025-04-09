@@ -3,10 +3,14 @@ using MongoDB.Bson.Serialization.Attributes;
 
 public class Utilisateur
 {
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
 
     public string Nom { get; set; }
-    public string Prénom { get; set; }
+    
+    [BsonElement("Prenom")] 
+    public string Prenom { get; set; }
     public enum Status { admin, users }
 
     [BsonElement("email")]

@@ -18,7 +18,7 @@ export default function Connexion() {
         // Stockage dans localStorage
         localStorage.setItem("userId", utilisateur.id);
         localStorage.setItem("userNom", utilisateur.nom);
-        localStorage.setItem("userPrenom", utilisateur.prénom);
+        localStorage.setItem("userPrenom", utilisateur.prenom);
 
         alert("Connexion réussie !");
         window.location.href = "/accueil"; // ou useNavigate() si tu veux
