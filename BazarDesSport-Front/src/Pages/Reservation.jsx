@@ -68,16 +68,15 @@ export default function Reservation() {
 
   // Tri des réservations par nom de matériel
   const sortedReservations = [...reservations].sort((a, b) => {
-    const nomA = materielMap[a.MaterielId] || "";
-    const nomB = materielMap[b.MaterielId] || "";
+    const nomA = materielMap[a.materielId] || "";
+    const nomB = materielMap[b.materielId] || "";
     return nomA.localeCompare(nomB);
   });
 
-  const estLeMemeJour = (date1, date2) => {
-    return date1.getFullYear() === date2.getFullYear() &&
-           date1.getMonth() === date2.getMonth() &&
-           date1.getDate() === date2.getDate();
+  const estLeMemeJour = (d1, d2) => {
+    return d1.toISOString().slice(0, 10) === d2.toISOString().slice(0, 10);
   };
+  
 
   // Fonction de supression de réservation 
   const handleDelete = async (reservationId) => {
@@ -153,10 +152,16 @@ export default function Reservation() {
             return null;
           }}     
           onClickDay={(jourClique) => {
+            
             const resDuJour = reservations.filter(r => estLeMemeJour(r.Date, jourClique));
-           setReservationsSelectionnees(resDuJour);
-            setModalOuvert(true); 
+            if (resDuJour.length > 0) { 
+              setReservationsSelectionnees(resDuJour);
+              setModalOuvert(true);
+            } else {
+              setReservationsSelectionnees([]); 
+            }
           }}
+          
           nextLabel={
             <span style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#7e57c2' }}>
               &#x203A;
@@ -194,7 +199,7 @@ export default function Reservation() {
               {sortedReservations.map((reservation, index) => (
                 <tr key={reservation.id || index}>
                   <td style={{ padding: '8px', textAlign: 'center' }}>
-                    {materielMap[reservation.MaterielId] || reservation.MaterielId}
+                    {materielMap[reservation.materielId] || reservation.materielId}
                   </td>
                   <td style={{ padding: '8px', textAlign: 'center' }}>
                     {reservation.Date.toLocaleDateString()}
