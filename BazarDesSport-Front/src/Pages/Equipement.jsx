@@ -142,10 +142,10 @@ export default function Equipement() {
                 value={newType}
                 onChange={(e) => setNewType(e.target.value)}
               >
-                <option value="None">None</option>
-                <option value="Ballon">Ballon</option>
-                <option value="Equipement">Equipement</option>
-                <option value="Logistique">Logistique</option>
+                   <option value="0">None</option>
+    <option value="1">Ballon</option>
+    <option value="2">Equipement</option>
+    <option value="3">Logistique</option>
               </select>
             </div>
 

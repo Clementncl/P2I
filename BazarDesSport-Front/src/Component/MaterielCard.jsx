@@ -16,14 +16,12 @@ export default function MaterialCard({ id, nom, image, stock }) {
   const [newStock, setNewStock] = useState(stock);
   const [openReservation, setOpenReservation] = useState(false);
 
-  // Fonction pour ouvrir le drawer de réservation
-  const handleReservationOpen = () => {
-    setOpenReservation(true);
-  };
+
 
   const handleReservationClose = () => {
     setOpenReservation(false);
   };
+ 
 
   // Fonction PUT pour modifier le stock
   const handleEditStock = async () => {
@@ -87,18 +85,12 @@ export default function MaterialCard({ id, nom, image, stock }) {
       </CardActionArea>
       <CardActions sx={{ flexDirection: "column", alignItems: "stretch", gap: 1 }}>
         
-        {!showEdit && (
-          <Button
-            onClick={handleReservationOpen}
-            variant="contained"
-            color="primary"
-            sx={{ width: "100%" }}
-          >
-            Réserver
-          </Button>
+        {!showEdit && (<SwipeableEdgeDrawer  materielId={id}  
+    utilisateurId={localStorage.getItem("userId") || ""}/>
+          
         )}
 
-        {/* Boutons "Modifier" et "Supprimer" en dessous (affichés si pas en mode édition) */}
+        {/* Boutons "Modifier" et "Supprimer"  */}
         {!showEdit && (
           <Box sx={{ display: "flex", gap: 1, justifyContent: "normal", width: "100%" }}>
             <Button

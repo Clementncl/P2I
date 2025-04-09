@@ -45,6 +45,9 @@ function SwipeableEdgeDrawer({ window, materielId, utilisateurId }) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   const handleReservation = async () => {
+      // Vérifiez que materielId et utilisateurId ne sont pas vides
+       {console.log(materielId ,  utilisateurId)}
+      
     try {
       const response = await fetch("http://localhost:5039/api/reservation", {
         method: "POST",
@@ -52,10 +55,10 @@ function SwipeableEdgeDrawer({ window, materielId, utilisateurId }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          materielId,
-          utilisateurId,
-          date,
-          quantite: parseInt(quantite),
+          MaterielId: materielId,
+          UtilisateurId: utilisateurId,
+          Date: date,
+          Quantite: parseInt(quantite),
         }),
       });
 
@@ -83,7 +86,14 @@ function SwipeableEdgeDrawer({ window, materielId, utilisateurId }) {
         }}
       />
       <Box sx={{ textAlign: 'center', pt: 1 }}>
-        <Button onClick={toggleDrawer(true)}>Réserver</Button>
+      <Button
+            onClick={toggleDrawer(true)}
+            variant="contained"
+            color="primary"
+            sx={{ width: "100%" }}
+          >
+            Réserver
+          </Button>
       </Box>
       <SwipeableDrawer
         container={container}
