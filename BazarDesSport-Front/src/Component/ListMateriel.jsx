@@ -1,3 +1,6 @@
+// Appelle l’API pour récupérer tous les matériels et 
+//les affiche avec MaterielCard dans une grille réactive.
+
 import  { useState, useEffect } from "react";
 import MaterialCard from "./MaterielCard";
 

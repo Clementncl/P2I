@@ -1,3 +1,6 @@
+//Version orientée affichage du Materiel, incluant la disponibilité, 
+//les réservations, et des protections sur le nom et le prix.
+
 public enum TypeMateriel
 {
     None,

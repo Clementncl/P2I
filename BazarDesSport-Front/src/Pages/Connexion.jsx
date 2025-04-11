@@ -1,3 +1,6 @@
+//Formulaire de login vérifiant les identifiants en interrogeant l’API. 
+// Stocke l’ID utilisateur dans localStorage en cas de succès.
+
 import { useState } from "react";
 import {  Stack, Paper,Typography,Container,TextField,Box,Link,Button} from "@mui/material";
 import TitrePage from "../Component/TitrePage";
@@ -19,9 +22,10 @@ export default function Connexion() {
         localStorage.setItem("userId", utilisateur.id);
         localStorage.setItem("userNom", utilisateur.nom);
         localStorage.setItem("userPrenom", utilisateur.prenom);
+        localStorage.setItem("userRole", utilisateur.role);
 
-        alert("Connexion réussie !");
-        window.location.href = "/accueil"; // ou useNavigate() si tu veux
+        
+        window.location.href = "/equipement"; 
       } else {
         alert("Identifiants incorrects");
       }
@@ -30,7 +34,7 @@ export default function Connexion() {
       alert("Erreur lors de la connexion");
     }
   };
-
+  
   return (
 
     <Container component="main" maxWidth="xs" sx={{ mt: 8,}}>

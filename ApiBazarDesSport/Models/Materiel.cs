@@ -1,3 +1,6 @@
+//Modèle de données d’un matériel avec nom, type (enum), 
+//image, stock, prix et une liste de réservations liées.
+
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 public class Materiel

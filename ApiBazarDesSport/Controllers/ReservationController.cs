@@ -1,3 +1,6 @@
+//Contrôleur pour créer des réservations, 
+//les consulter (par ID ou par mois), les modifier ou les supprimer.
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;

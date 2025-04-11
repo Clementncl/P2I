@@ -1,3 +1,6 @@
+//Page principale de gestion des équipements. Permet d’afficher,
+// d’ajouter un matériel (via modal) et de relancer la liste.
+
 import { useState } from "react";
 import ListMaterial from "../Component/ListMateriel";
 import { Button, Box, Modal } from "@mui/material";

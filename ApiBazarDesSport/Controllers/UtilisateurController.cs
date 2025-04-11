@@ -1,3 +1,6 @@
+//Contrôleur RESTful complet permettant d’ajouter, modifier, 
+//supprimer ou récupérer des utilisateurs via l’API (/api/utilisateur).
+
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;

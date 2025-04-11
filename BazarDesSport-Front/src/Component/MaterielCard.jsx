@@ -1,3 +1,6 @@
+//Composant carte affichant un matériel avec son image, nom, stock. 
+// Contient des boutons pour modifier le stock ou supprimer l’objet.
+
 import PropTypes from "prop-types";
 import { useState } from "react";
 import Card from "@mui/material/Card";

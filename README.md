@@ -15,3 +15,4 @@
  4) npm install react-router-dom
  6) npm install react-calendar
  5) npm run dev
+ 6) Ctrl + Click sur " http://localhost:5173/"

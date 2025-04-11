@@ -1,3 +1,5 @@
+//Composant décoratif utilisé sur chaque page pour styliser les titres avec MUI (centré, couleur violette).
+
 import { Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 

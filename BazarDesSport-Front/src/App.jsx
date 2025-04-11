@@ -1,14 +1,17 @@
 import './App.css'
 import PrimarySearchAppBar from './Component/Searchbar'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Accueil from './Pages/Accueil'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Equipement from './Pages/Equipement'
-import Reservation from './Pages/Reservation'
+import Reservation from './Pages//Reservation'
+import EquipementClient from './Pages/EquipementClient'
+import ReservationClient from './Pages/ReservationClient'
 import Connexion from './Pages/Connexion';
 import Inscription from './Pages/Inscription';
 import ValidationDemandes from './Pages/ValidationDemandes';
 function App() {
  
+  const role = localStorage.getItem("userRole");
+  console.log("role utilisateur :", localStorage.getItem("userRole"));
 
   return (
     <Router>
@@ -16,16 +19,17 @@ function App() {
       <PrimarySearchAppBar/>
 
     {/* definition Routes  */}
-    <Routes>
-      <Route path="/accueil" element={<Accueil />} />
-      <Route path="/equipement" element={<Equipement />} />
-      <Route path="/reservation" element={<Reservation/>} />
+    <Routes>     
+    <Route path="/" element={<Navigate to="/connexion" replace />} />
       <Route path="/connexion" element={<Connexion/>} />
       <Route path="/inscription" element={<Inscription/>} />
       <Route path="/ValidationDemandes" element={<ValidationDemandes/>} />
+      <Route path="/reservation" element={ role === "admin" ? <Reservation /> : <ReservationClient /> } />
+      <Route path="/equipement" element={ role === "admin" ? <Equipement /> : <EquipementClient /> } />
     </Routes>
 
    </Router>
+   
   )
 }
 

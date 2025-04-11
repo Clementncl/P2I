@@ -1,3 +1,6 @@
+//DTO pour transférer les réservations vers le frontend, contenant le matériel,
+// l’utilisateur, la date et la quantité.
+
 using System.ComponentModel;
 
 public class ReservationDTO

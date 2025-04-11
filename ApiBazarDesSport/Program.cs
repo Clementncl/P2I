@@ -1,3 +1,7 @@
+
+//Initialise l’application ASP.NET Core, configure les services, active CORS, Swagger, 
+// les contrôleurs et démarre l’API à l’adresse locale.
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuration MongoDB

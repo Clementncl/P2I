@@ -1,3 +1,8 @@
+// Barre de navigation avec menu latéral (Drawer) vers les pages 
+//Accueil, Équipements, Réservations et Statistiques.
+//Le nom "SearchBar" est celui de MaterialMUI que j'ai conservé
+// malgré le fait que ça ne soit pas une barre de recherche actuellement (elle pourrait le devenir)
+
 import * as React from 'react';
 // import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -15,7 +20,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -111,17 +115,10 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
-          <Badge badgeContent={17} color="error">
+        <IconButton size="large" aria-label="show 3 new notifications" color="inherit">
+          <Badge badgeContent={3} color="error">
             <NotificationsIcon/>
           </Badge>
         </IconButton>
@@ -137,7 +134,7 @@ export default function PrimarySearchAppBar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>Profil</p>
       </MenuItem>
     </Menu>
   );
@@ -180,11 +177,6 @@ export default function PrimarySearchAppBar() {
       <Drawer anchor="left" open={openDrawer} onClose={toggleDrawer(false)}>
         <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
         <List>
-  <ListItem disablePadding>
-    <ListItemButton onClick={() => navigate("/accueil")}>
-      <ListItemText primary="Accueil" />
-    </ListItemButton>
-  </ListItem>
 
   <ListItem disablePadding>
     <ListItemButton onClick={() => navigate("/equipement")}>

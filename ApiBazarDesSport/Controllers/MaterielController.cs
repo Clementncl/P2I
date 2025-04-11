@@ -1,3 +1,6 @@
+//Fournit les routes pour gérer les matériels (CRUD), 
+//vérifier leur disponibilité, et retourner des objets MaterielDTO enrichis.
+
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using System.Collections.Generic;

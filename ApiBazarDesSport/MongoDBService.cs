@@ -1,3 +1,6 @@
+//Service injecté pour centraliser la configuration MongoDB ; 
+//permet d’accéder aux collections de manière typée (GetCollection<T>).
+
 using MongoDB.Bson;
 using MongoDB.Driver;
 

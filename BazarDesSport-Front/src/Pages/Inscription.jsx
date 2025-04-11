@@ -1,3 +1,5 @@
+// Page d’inscription avec formulaire complet (nom, prénom, email, mot de passe) connecté à l’API utilisateur.
+
 import { useState } from "react";
 import {  Stack, Paper,Typography,Container,TextField,Box,Link,Button} from "@mui/material";
 import TitrePage from "../Component/TitrePage";

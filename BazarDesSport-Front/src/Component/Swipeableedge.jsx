@@ -1,3 +1,6 @@
+//Drawer coulissant permettant de réserver un matériel (sélection date + quantité). 
+// Envoie une requête POST à l’API /reservation.
+
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -7,7 +10,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import TextField from '@mui/material/TextField';
 
@@ -101,7 +103,8 @@ function SwipeableEdgeDrawer({ window, materielId, utilisateurId }) {
         open={open}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
-        swipeAreaWidth={drawerBleeding}
+        swipeAreaWidth={0} 
+        disableDiscovery={true}
         disableSwipeToOpen={false}
         keepMounted
       >
