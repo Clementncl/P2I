@@ -1,4 +1,4 @@
-//Composant carte affichant un matériel avec son image, nom, stock. 
+//Composant carte affichant un matériel avec son image, nom, stock.
 // Contient des boutons pour modifier le stock ou supprimer l’objet.
 
 import PropTypes from "prop-types";
@@ -10,8 +10,8 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
 import { Button, Box } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
-import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+import DeleteIcon from "@mui/icons-material/Delete";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import SwipeableEdgeDrawer from "./Swipeableedge";
 
 export default function MaterialCard({ id, nom, image, stock }) {
@@ -19,12 +19,9 @@ export default function MaterialCard({ id, nom, image, stock }) {
   const [newStock, setNewStock] = useState(stock);
   const [openReservation, setOpenReservation] = useState(false);
 
-
-
   const handleReservationClose = () => {
     setOpenReservation(false);
   };
- 
 
   // Fonction PUT pour modifier le stock
   const handleEditStock = async () => {
@@ -75,7 +72,7 @@ export default function MaterialCard({ id, nom, image, stock }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
-        {console.log("image",image)}
+        {console.log("image", image)}
         <CardMedia component="img" height="140" image={image} alt={nom} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -86,21 +83,36 @@ export default function MaterialCard({ id, nom, image, stock }) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions sx={{ flexDirection: "column", alignItems: "stretch", gap: 1 }}>
-        
-        {!showEdit && (<SwipeableEdgeDrawer  materielId={id}  
-    utilisateurId={localStorage.getItem("userId") || ""}/>
-          
+      <CardActions
+        sx={{ flexDirection: "column", alignItems: "stretch", gap: 1 }}
+      >
+        {!showEdit && (
+          <SwipeableEdgeDrawer
+            materielId={id}
+            utilisateurId={localStorage.getItem("userId") || ""}
+          />
         )}
 
         {/* Boutons "Modifier" et "Supprimer"  */}
         {!showEdit && (
-          <Box sx={{ display: "flex", gap: 1, justifyContent: "normal", width: "100%" }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              justifyContent: "normal",
+              width: "100%",
+            }}
+          >
             <Button
               onClick={() => setShowEdit(true)}
               startIcon={<ModeEditOutlineIcon />}
               variant="text"
-              sx={{ backgroundColor: "#7e57c2", fontSize: "0.8rem", color: "white", width: "130px" }}
+              sx={{
+                backgroundColor: "#7e57c2",
+                fontSize: "0.8rem",
+                color: "white",
+                width: "130px",
+              }}
             >
               Modifier le stock
             </Button>
@@ -109,7 +121,7 @@ export default function MaterialCard({ id, nom, image, stock }) {
               color="error"
               variant="contained"
               startIcon={<DeleteIcon />}
-              sx={{ fontSize: "0.75rem", width: "130px" }} 
+              sx={{ fontSize: "0.75rem", width: "130px" }}
             >
               Supprimer
             </Button>
@@ -118,7 +130,14 @@ export default function MaterialCard({ id, nom, image, stock }) {
 
         {/* Affichage de l'édition du stock */}
         {showEdit && (
-          <Box sx={{ display: "flex", gap: 1, alignItems: "center", width: "100%" }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
             <input
               type="number"
               value={newStock}
@@ -128,7 +147,11 @@ export default function MaterialCard({ id, nom, image, stock }) {
             <Button
               onClick={handleEditStock}
               variant="contained"
-              sx={{ backgroundColor: "#7e57c2", fontSize: "0.8rem", color: "white" }}
+              sx={{
+                backgroundColor: "#7e57c2",
+                fontSize: "0.8rem",
+                color: "white",
+              }}
             >
               OK
             </Button>
@@ -143,7 +166,7 @@ export default function MaterialCard({ id, nom, image, stock }) {
           </Box>
         )}
       </CardActions>
-      
+
       {openReservation && (
         <SwipeableEdgeDrawer
           materielId={id}

@@ -44,7 +44,7 @@ public class MaterielDTO
 
     public MaterielDTO(Materiel Materiel, bool estDisponible)
     {
-        Id=Materiel.Id;
+                     Id=Materiel.Id;
         Nom = Materiel.Nom;
         Stock = Materiel.Stock;
         Prix = Materiel.Prix;

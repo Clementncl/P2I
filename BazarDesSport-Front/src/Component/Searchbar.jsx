@@ -1,50 +1,56 @@
-// Barre de navigation avec menu latéral (Drawer) vers les pages 
+// Barre de navigation avec menu latéral (Drawer) vers les pages
 //Accueil, Équipements, Réservations et Statistiques.
 //Le nom "SearchBar" est celui de MaterialMUI que j'ai conservé
 // malgré le fait que ça ne soit pas une barre de recherche actuellement (elle pourrait le devenir)
 
-import * as React from 'react';
+import * as React from "react";
 // import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import ListItemButton from '@mui/material/ListItemButton';
-
-
+import Badge from "@mui/material/Badge";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import ListItemButton from "@mui/material/ListItemButton";
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [openDrawer, setOpenDrawer] = React.useState(false); // État pour gérer le sidebar
-  const navigate = useNavigate(); // pour pouvoir utiliser la navigation plus tard dans le code 
+  const navigate = useNavigate(); // pour pouvoir utiliser la navigation plus tard dans le code
   const location = useLocation();
-  
-  if (location.pathname === "/connexion" || location.pathname === "/inscription") {
+
+  if (
+    location.pathname === "/connexion" ||
+    location.pathname === "/inscription"
+  ) {
     return (
-      <AppBar position="static"  sx={{ backgroundColor: '#7e57c2'  }}>
+      <AppBar position="static" sx={{ backgroundColor: "#7e57c2" }}>
         <Toolbar>
-          <Typography variant="h6" noWrap component="div"  sx={{ display: { xs: 'none', sm: 'block'  } }}>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: "none", sm: "block" } }}
+          >
             Bazar Des Sports
           </Typography>
         </Toolbar>
       </AppBar>
     );
   }
-  
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -70,26 +76,27 @@ export default function PrimarySearchAppBar() {
     localStorage.removeItem("userNom");
     localStorage.removeItem("userPrenom");
     handleMenuClose(); // Ferme le menu
-    navigate("/connexion");}
+    navigate("/connexion");
+  };
 
   // Fonctions pour ouvrir/fermer le sidebar
   const toggleDrawer = (state) => () => {
     setOpenDrawer(state);
   };
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
-    <Menu 
+    <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
@@ -98,28 +105,31 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      
       <MenuItem>
-        <IconButton size="large" aria-label="show 3 new notifications" color="inherit">
+        <IconButton
+          size="large"
+          aria-label="show 3 new notifications"
+          color="inherit"
+        >
           <Badge badgeContent={3} color="error">
-            <NotificationsIcon/>
+            <NotificationsIcon />
           </Badge>
         </IconButton>
         <p>Notifications</p>
@@ -140,63 +150,94 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1, }}>
-      <AppBar position="static" sx={{ backgroundColor: '#7e57c2' }}>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" sx={{ backgroundColor: "#7e57c2" }}>
         <Toolbar>
           {/* Bouton Menu avec sidebar */}
-          <IconButton size="large" edge="start" color="inherit" onClick={toggleDrawer(true)}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            onClick={toggleDrawer(true)}
+          >
             <MenuIcon />
           </IconButton>
 
-          <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: "none", sm: "block" } }}
+          >
             Bazar Des Sports
           </Typography>
 
-        
-
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
               <Badge badgeContent={3} color="error">
-                <NotificationsIcon onClick={() => navigate("/ValidationDemandes")}/>
+                <NotificationsIcon
+                  onClick={() => navigate("/ValidationDemandes")}
+                />
               </Badge>
             </IconButton>
-            <IconButton size="large" edge="end" aria-label="account of current user" aria-controls={menuId} aria-haspopup="true" onClick={handleProfileMenuOpen} color="inherit">
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
               <AccountCircle />
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton size="large" aria-label="show more" aria-controls={mobileMenuId} aria-haspopup="true" onClick={handleMobileMenuOpen} color="inherit">
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
               <MoreIcon />
             </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
 
-{/* pour afficher les différentes pages du sites  */}
+      {/* pour afficher les différentes pages du sites  */}
       <Drawer anchor="left" open={openDrawer} onClose={toggleDrawer(false)}>
-        <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-        <List>
+        <Box
+          sx={{ width: 250 }}
+          role="presentation"
+          onClick={toggleDrawer(false)}
+        >
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => navigate("/equipement")}>
+                <ListItemText primary="Équipements" />
+              </ListItemButton>
+            </ListItem>
 
-  <ListItem disablePadding>
-    <ListItemButton onClick={() => navigate("/equipement")}>
-      <ListItemText primary="Équipements" />
-    </ListItemButton>
-  </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => navigate("/reservation")}>
+                <ListItemText primary="Réservations" />
+              </ListItemButton>
+            </ListItem>
 
-  <ListItem disablePadding>
-    <ListItemButton onClick={() => navigate("/reservation")}>
-      <ListItemText primary="Réservations" />
-    </ListItemButton>
-  </ListItem>
-
-  <ListItem disablePadding>
-    <ListItemButton>
-      <ListItemText primary="Statistiques" />
-    </ListItemButton>
-  </ListItem>
-</List>
-
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemText primary="Statistiques" />
+              </ListItemButton>
+            </ListItem>
+          </List>
         </Box>
       </Drawer>
 
@@ -205,5 +246,3 @@ export default function PrimarySearchAppBar() {
     </Box>
   );
 }
-
-

@@ -3,21 +3,21 @@
 import { Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 
-function TitrePage({titre}) {
+function TitrePage({ titre }) {
   return (
-    <Box 
-      sx={{ 
+    <Box
+      sx={{
         display: "flex",
         justifyContent: "center",
-        my: 3
+        my: 3,
       }}
     >
       <Typography
         variant="h4"
         align="center"
-        sx={{ 
-          fontWeight: "bold", 
-          color: "#7e57c2" 
+        sx={{
+          fontWeight: "bold",
+          color: "#7e57c2",
         }}
       >
         {titre}
@@ -26,8 +26,7 @@ function TitrePage({titre}) {
   );
 }
 TitrePage.propTypes = {
-    titre: PropTypes.string.isRequired,
-  };
-  
+  titre: PropTypes.string.isRequired,
+};
 
 export default TitrePage;

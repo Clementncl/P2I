@@ -1,8 +1,17 @@
-//Formulaire de login vérifiant les identifiants en interrogeant l’API. 
+//Formulaire de login vérifiant les identifiants en interrogeant l’API.
 // Stocke l’ID utilisateur dans localStorage en cas de succès.
 
 import { useState } from "react";
-import {  Stack, Paper,Typography,Container,TextField,Box,Link,Button} from "@mui/material";
+import {
+  Stack,
+  Paper,
+  Typography,
+  Container,
+  TextField,
+  Box,
+  Link,
+  Button,
+} from "@mui/material";
 import TitrePage from "../Component/TitrePage";
 export default function Connexion() {
   const [email, setEmail] = useState("");
@@ -24,8 +33,7 @@ export default function Connexion() {
         localStorage.setItem("userPrenom", utilisateur.prenom);
         localStorage.setItem("userRole", utilisateur.role);
 
-        
-        window.location.href = "/equipement"; 
+        window.location.href = "/equipement";
       } else {
         alert("Identifiants incorrects");
       }
@@ -34,12 +42,14 @@ export default function Connexion() {
       alert("Erreur lors de la connexion");
     }
   };
-  
-  return (
 
-    <Container component="main" maxWidth="xs" sx={{ mt: 8,}}>
-      <Paper elevation={3} sx={{ p: 3 , borderRadius: 4, backgroundColor: '#f5f5f5' }}>
-          <TitrePage titre="Connexion"/>  
+  return (
+    <Container component="main" maxWidth="xs" sx={{ mt: 8 }}>
+      <Paper
+        elevation={3}
+        sx={{ p: 3, borderRadius: 4, backgroundColor: "#f5f5f5" }}
+      >
+        <TitrePage titre="Connexion" />
         <Stack spacing={2}>
           <TextField
             label="Email"
@@ -58,14 +68,19 @@ export default function Connexion() {
             fullWidth
           />
 
-          <Button variant="contained" onClick={handleLogin} fullWidth   sx={{
-    backgroundColor: '#7e57c2', 
-    color: '#000',
-    borderRadius: 3,
-    '&:hover': {
-      backgroundColor: '#d8d8f0', 
-    },
-  }}>
+          <Button
+            variant="contained"
+            onClick={handleLogin}
+            fullWidth
+            sx={{
+              backgroundColor: "#7e57c2",
+              color: "#000",
+              borderRadius: 3,
+              "&:hover": {
+                backgroundColor: "#d8d8f0",
+              },
+            }}
+          >
             Se connecter
           </Button>
 
@@ -80,6 +95,5 @@ export default function Connexion() {
         </Stack>
       </Paper>
     </Container>
-
   );
 }

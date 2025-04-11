@@ -1,53 +1,58 @@
-import { Modal, Box, Button } from '@mui/material';
-import { useState, useEffect } from 'react';
-import Calendar from 'react-calendar'; 
-import TitrePage from '../Component/TitrePage';
-
+import { Modal, Box, Button } from "@mui/material";
+import { useState, useEffect } from "react";
+import Calendar from "react-calendar";
+import TitrePage from "../Component/TitrePage";
 
 export default function ReservationClient() {
   const [date, setDate] = useState(new Date());
   const [reservations, setReservations] = useState([]);
-  const [materiels, setMateriels] = useState([]); 
-  const [reservationsSelectionnees, setReservationsSelectionnees] = useState([]);
+  const [materiels, setMateriels] = useState([]);
+  const [reservationsSelectionnees, setReservationsSelectionnees] = useState(
+    []
+  );
   const [modalOuvert, setModalOuvert] = useState(false);
   const styleModal = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 300,
-    bgcolor: 'background.paper',
-    borderRadius: '8px',
+    bgcolor: "background.paper",
+    borderRadius: "8px",
     boxShadow: 24,
     p: 4,
-    textAlign: 'center', 
+    textAlign: "center",
   };
-  
-  useEffect(() => { 
-    loadReservations(); 
+
+  useEffect(() => {
+    loadReservations();
   }, [date]);
-  
-  useEffect(() => { 
-    console.log("reservations mises à jour", reservations); 
+
+  useEffect(() => {
+    console.log("reservations mises à jour", reservations);
   }, [reservations]);
-  
-  useEffect(() => { 
-    loadMateriels(); 
+
+  useEffect(() => {
+    loadMateriels();
   }, []);
 
   const loadReservations = async () => {
     const mois = date.getMonth() + 1; // Mois commence à 0 (janvier = 0)
     const annee = date.getFullYear();
-    const response = await fetch(`http://localhost:5039/api/reservation/Mensuelle?mois=${mois}&an=${annee}`);
+    const response = await fetch(
+      `http://localhost:5039/api/reservation/Mensuelle?mois=${mois}&an=${annee}`
+    );
     const data = await response.json();
     console.log("données", data);
 
     // Conversion de la date en objet Date pour chaque réservation
-    const reservationsAvecDate = data.map(reservation => ({
+    const reservationsAvecDate = data.map((reservation) => ({
       ...reservation,
-      Date: new Date(reservation.date) 
+      Date: new Date(reservation.date),
     }));
-    const reservationsValides = reservationsAvecDate.filter(reservation => !isNaN(reservation.Date.getTime()));
+    const reservationsValides = reservationsAvecDate.filter(
+      (reservation) => !isNaN(reservation.Date.getTime())
+    );
     setReservations(reservationsValides);
   };
 
@@ -69,15 +74,19 @@ export default function ReservationClient() {
   const estLeMemeJour = (d1, d2) => {
     return d1.toISOString().slice(0, 10) === d2.toISOString().slice(0, 10);
   };
-  
+
   const handleCancelReservation = async () => {
-    if (!window.confirm("Voulez-vous vraiment annuler cette réservation ?")) return;
+    if (!window.confirm("Voulez-vous vraiment annuler cette réservation ?"))
+      return;
     if (reservationsSelectionnees.length > 0) {
       const reservationId = reservationsSelectionnees[0].id; // Utilisation de la première réservation sélectionnée
       try {
-        const response = await fetch(`http://localhost:5039/api/reservation/${reservationId}`, {
-          method: "DELETE",
-        });
+        const response = await fetch(
+          `http://localhost:5039/api/reservation/${reservationId}`,
+          {
+            method: "DELETE",
+          }
+        );
         if (response.ok) {
           alert("Réservation annulée !");
           setModalOuvert(false);
@@ -107,58 +116,74 @@ export default function ReservationClient() {
         }
       `}</style>
       <TitrePage titre="Mes Réservations" />
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Calendar 
-          fontSize= '1.25rem'
-          fontWeight='bold'
-          color= '#4a148c'
-          padding='0.5rem 0'
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Calendar
+          fontSize="1.25rem"
+          fontWeight="bold"
+          color="#4a148c"
+          padding="0.5rem 0"
           onChange={setDate}
           value={date}
-          next2Label={null} 
-          prev2Label={null} 
+          next2Label={null}
+          prev2Label={null}
           // Coloration des jours où il y a une réservation
           tileClassName={({ date: dateTuile, view }) => {
-            if (view === 'month') {
-              const aReservation = reservations.some(r => estLeMemeJour(r.Date, dateTuile));
-              return aReservation ? 'jour-reservation' : null;
+            if (view === "month") {
+              const aReservation = reservations.some((r) =>
+                estLeMemeJour(r.Date, dateTuile)
+              );
+              return aReservation ? "jour-reservation" : null;
             }
             return null;
-          }}     
+          }}
           onClickDay={(jourClique) => {
-            
-            const resDuJour = reservations.filter(r => estLeMemeJour(r.Date, jourClique));
-            if (resDuJour.length > 0) { 
+            const resDuJour = reservations.filter((r) =>
+              estLeMemeJour(r.Date, jourClique)
+            );
+            if (resDuJour.length > 0) {
               setReservationsSelectionnees(resDuJour);
               setModalOuvert(true);
             } else {
-              setReservationsSelectionnees([]); 
+              setReservationsSelectionnees([]);
             }
           }}
-          
           nextLabel={
-            <span style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#7e57c2' }}>
+            <span
+              style={{
+                fontSize: "1.3rem",
+                fontWeight: "bold",
+                color: "#7e57c2",
+              }}
+            >
               &#x203A;
             </span>
           }
           prevLabel={
-            <span style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#7e57c2' }}>
+            <span
+              style={{
+                fontSize: "1.3rem",
+                fontWeight: "bold",
+                color: "#7e57c2",
+              }}
+            >
               &#x2039;
             </span>
           }
-          navigationLabel={({  label }) => (
-            <div style={{
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              color: '#4a148c',
-              padding: '0.2rem 4'
-            }}>
+          navigationLabel={({ label }) => (
+            <div
+              style={{
+                fontSize: "1rem",
+                fontWeight: "bold",
+                color: "#4a148c",
+                padding: "0.2rem 4",
+              }}
+            >
               {label}
             </div>
           )}
         />
       </div>
-      
+
       {/* Affichage en overlay du détail des réservations pour la date sélectionnée */}
       <Modal
         open={modalOuvert}
@@ -167,21 +192,37 @@ export default function ReservationClient() {
         aria-describedby="description-modal"
       >
         <Box sx={styleModal}>
-          <h3 id="titre-modal">Détails des réservations pour le {reservationsSelectionnees.length > 0 && reservationsSelectionnees[0].Date.toLocaleDateString()}</h3>
-          <ul style={{ listStyle: 'none', padding: 0 ,fontSize: '1.2rem'}}>
+          <h3 id="titre-modal">
+            Détails des réservations pour le{" "}
+            {reservationsSelectionnees.length > 0 &&
+              reservationsSelectionnees[0].Date.toLocaleDateString()}
+          </h3>
+          <ul style={{ listStyle: "none", padding: 0, fontSize: "1.2rem" }}>
             {reservationsSelectionnees.map((res, index) => (
               <li key={res.id || index}>
-                Matériel : {materielMap[res.MaterielId] || res.MaterielId} - Quantité : {res.quantite || '-'}
+                Matériel : {materielMap[res.MaterielId] || res.MaterielId} -
+                Quantité : {res.quantite || "-"}
               </li>
             ))}
           </ul>
-      <Box display="flex" gap={2} justifyContent= "normal">
-        <Button onClick={() => handleCancelReservation(reservationsSelectionnees[0].id)} color="error" variant="contained" sx={{ mt: 2 ,fontSize: '1rem'}}>
-            Annuler ma réservation
-          </Button>
-          <Button onClick={() => setModalOuvert(false)} variant="contained" sx={{ mt: 2 ,fontSize: '1rem', backgroundColor: "#7e57c2"}} >
-            Fermer
-          </Button>
+          <Box display="flex" gap={2} justifyContent="normal">
+            <Button
+              onClick={() =>
+                handleCancelReservation(reservationsSelectionnees[0].id)
+              }
+              color="error"
+              variant="contained"
+              sx={{ mt: 2, fontSize: "1rem" }}
+            >
+              Annuler ma réservation
+            </Button>
+            <Button
+              onClick={() => setModalOuvert(false)}
+              variant="contained"
+              sx={{ mt: 2, fontSize: "1rem", backgroundColor: "#7e57c2" }}
+            >
+              Fermer
+            </Button>
           </Box>
         </Box>
       </Modal>

@@ -4,7 +4,7 @@
 import { useState } from "react";
 import ListMaterial from "../Component/ListMateriel";
 import { Button, Box, Modal } from "@mui/material";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import TitrePage from "../Component/TitrePage";
 
 // Enum côté frontend, en phase avec ton enum .NET
@@ -40,8 +40,8 @@ export default function Equipement() {
           nom: newNom,
           stock: parseInt(newStock),
           prix: parseFloat(newPrix),
-          type: parseInt(newType), 
-          image:  newImage.trim() !== "" ? newImage : null,
+          type: parseInt(newType),
+          image: newImage.trim() !== "" ? newImage : null,
         }),
       });
 
@@ -67,7 +67,7 @@ export default function Equipement() {
 
   return (
     <>
-   <TitrePage titre="Equipements BDS"/>
+      <TitrePage titre="Equipements BDS" />
       {/* Bouton pour afficher le formulaire */}
       {!showAddForm && (
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2, mb: 2 }}>
@@ -133,9 +133,10 @@ export default function Equipement() {
               <label>image : </label>
               <input
                 type="text"
-                value={newImage || "BazarDesSport-Front/public/image/LogoBDS.png"}
+                value={
+                  newImage || "BazarDesSport-Front/public/image/LogoBDS.png"
+                }
                 onChange={(e) => setNewImage(e.target.value)}
-                
               />
             </div>
 
@@ -145,10 +146,10 @@ export default function Equipement() {
                 value={newType}
                 onChange={(e) => setNewType(e.target.value)}
               >
-                   <option value="0">None</option>
-    <option value="1">Ballon</option>
-    <option value="2">Equipement</option>
-    <option value="3">Logistique</option>
+                <option value="0">None</option>
+                <option value="1">Ballon</option>
+                <option value="2">Equipement</option>
+                <option value="3">Logistique</option>
               </select>
             </div>
 
@@ -173,7 +174,7 @@ export default function Equipement() {
           </form>
         </Box>
       </Modal>
-      <ListMaterial/>
+      <ListMaterial />
     </>
   );
 }

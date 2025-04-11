@@ -1,7 +1,16 @@
 // Page d’inscription avec formulaire complet (nom, prénom, email, mot de passe) connecté à l’API utilisateur.
 
 import { useState } from "react";
-import {  Stack, Paper,Typography,Container,TextField,Box,Link,Button} from "@mui/material";
+import {
+  Stack,
+  Paper,
+  Typography,
+  Container,
+  TextField,
+  Box,
+  Link,
+  Button,
+} from "@mui/material";
 import TitrePage from "../Component/TitrePage";
 
 export default function Inscription() {
@@ -26,7 +35,7 @@ export default function Inscription() {
           nom: nom,
           Prenom: prenom,
           email: email,
-          passwordHash: motDePasse, 
+          passwordHash: motDePasse,
         }),
       });
 
@@ -43,11 +52,14 @@ export default function Inscription() {
   };
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ mt: 8,}}>
-      <Paper elevation={3} sx={{ p: 3 , borderRadius: 4, backgroundColor: '#f5f5f5' }}>
-         <TitrePage titre="Inscription"/> 
+    <Container component="main" maxWidth="xs" sx={{ mt: 8 }}>
+      <Paper
+        elevation={3}
+        sx={{ p: 3, borderRadius: 4, backgroundColor: "#f5f5f5" }}
+      >
+        <TitrePage titre="Inscription" />
         <Stack spacing={2}>
-        <TextField
+          <TextField
             label="Nom"
             type="string"
             variant="outlined"
@@ -55,7 +67,7 @@ export default function Inscription() {
             onChange={(e) => setNom(e.target.value)}
             fullWidth
           />
-           <TextField
+          <TextField
             label="Prénom"
             type="string"
             variant="outlined"
@@ -63,7 +75,7 @@ export default function Inscription() {
             onChange={(e) => setPrenom(e.target.value)}
             fullWidth
           />
-          
+
           <TextField
             label="Email"
             type="email"
@@ -81,14 +93,19 @@ export default function Inscription() {
             fullWidth
           />
 
-          <Button variant="contained" onClick={handleInscription} fullWidth   sx={{
-    backgroundColor: '#7e57c2', 
-    color: '#000',
-    borderRadius: 3,
-    '&:hover': {
-      backgroundColor: '#d8d8f0', 
-    },
-  }}>
+          <Button
+            variant="contained"
+            onClick={handleInscription}
+            fullWidth
+            sx={{
+              backgroundColor: "#7e57c2",
+              color: "#000",
+              borderRadius: 3,
+              "&:hover": {
+                backgroundColor: "#d8d8f0",
+              },
+            }}
+          >
             S&apos;inscrire
           </Button>
 
