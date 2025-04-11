@@ -11,6 +11,7 @@ export default function Reservation() {
   const [date, setDate] = useState(new Date());
   const [reservations, setReservations] = useState([]);
   const [materiels, setMateriels] = useState([]);
+  const [utilisateurs, setUtilisateurs] = useState([]);
   const [reservationsSelectionnees, setReservationsSelectionnees] = useState(
     []
   );
@@ -33,11 +34,10 @@ export default function Reservation() {
   }, [date]);
 
   useEffect(() => {
-    console.log("reservations mises à jour", reservations);
-  }, [reservations]);
-
-  useEffect(() => {
     loadMateriels();
+  }, []);
+  useEffect(() => {
+    loadUtilisateurs();
   }, []);
 
   const loadReservations = async () => {
@@ -49,24 +49,27 @@ export default function Reservation() {
     const data = await response.json();
     console.log("données", data);
 
-    const userId = localStorage.getItem("userId"); // Récupération de l'ID de l'utilisateur connecté
-    console.log("User ID connecté :", userId);
-
-    // Filtrage des réservations pour l'utilisateur connecté
-    const dataFiltrees = data.filter(
-      (reservation) => reservation.utilisateurId === userId
-    );
-    // Conversion de la date en objet Date pour chaque réservation
-    const reservationsAvecDate = dataFiltrees.map((reservation) => ({
+    const reservationsAvecDate = data.map((reservation) => ({
       ...reservation,
       Date: new Date(reservation.date),
     }));
-    console.log("datafiltrée", dataFiltrees);
+    // Conversion de la date en objet Date pour chaque réservation
+
     console.log("reservation.date", reservations.date);
     const reservationsValides = reservationsAvecDate.filter(
       (reservation) => !isNaN(reservation.Date.getTime())
     );
     setReservations(reservationsValides);
+  };
+
+  const loadUtilisateurs = async () => {
+    try {
+      const response = await fetch("http://localhost:5039/api/utilisateur");
+      const data = await response.json();
+      setUtilisateurs(data);
+    } catch (error) {
+      console.error("Erreur lors du chargement des utilisateurs :", error);
+    }
   };
 
   const loadMateriels = async () => {
@@ -81,6 +84,10 @@ export default function Reservation() {
 
   const materielMap = materiels.reduce((map, m) => {
     map[m.id] = m.nom;
+    return map;
+  }, {});
+  const utilisateurMap = utilisateurs.reduce((map, u) => {
+    map[u.id] = `${u.prenom} ${u.nom}`;
     return map;
   }, {});
 
@@ -241,6 +248,7 @@ export default function Reservation() {
                 style={{ borderBottom: "1px solid #ccc", textAlign: "center" }}
               >
                 <th style={{ padding: "8px" }}>Nom du matériel</th>
+                <th style={{ padding: "8px" }}>Réservé par</th>
                 <th style={{ padding: "8px" }}>Date</th>
                 <th style={{ padding: "8px" }}>Quantité</th>
               </tr>
@@ -253,10 +261,15 @@ export default function Reservation() {
                       reservation.materielId}
                   </td>
                   <td style={{ padding: "8px", textAlign: "center" }}>
+                    {utilisateurMap[reservation.utilisateurId] ||
+                      reservation.utilisateurId}
+                  </td>
+
+                  <td style={{ padding: "8px", textAlign: "center" }}>
                     {reservation.Date.toLocaleDateString()}
                   </td>
                   <td style={{ padding: "8px", textAlign: "center" }}>
-                    {reservation.Quantite || "-"}
+                    {reservation.quantite || "-"}
                   </td>
                   <td style={{ textAlign: "center" }}>
                     <Button
@@ -293,7 +306,7 @@ export default function Reservation() {
           <ul style={{ listStyle: "none", padding: 0, fontSize: "1.2rem" }}>
             {reservationsSelectionnees.map((res, index) => (
               <li key={res.id || index}>
-                Matériel : {materielMap[res.MaterielId] || res.MaterielId} -
+                Matériel : {materielMap[res.materielId] || res.materielId} -
                 Quantité : {res.quantite || "-"}
               </li>
             ))}

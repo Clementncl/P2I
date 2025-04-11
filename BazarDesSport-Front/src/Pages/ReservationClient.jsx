@@ -1,9 +1,12 @@
+//Affiche un calendrier avec les jours contenant des réservations (colorés),
+// un tableau récapitulatif et une modal de suppression.
+
 import { Modal, Box, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import TitrePage from "../Component/TitrePage";
 
-export default function ReservationClient() {
+export default function Reservation() {
   const [date, setDate] = useState(new Date());
   const [reservations, setReservations] = useState([]);
   const [materiels, setMateriels] = useState([]);
@@ -45,11 +48,20 @@ export default function ReservationClient() {
     const data = await response.json();
     console.log("données", data);
 
+    const userId = localStorage.getItem("userId"); // Récupération de l'ID de l'utilisateur connecté
+    console.log("User ID connecté :", userId);
+
+    // Filtrage des réservations pour l'utilisateur connecté
+    const dataFiltrees = data.filter(
+      (reservation) => reservation.utilisateurId === userId
+    );
     // Conversion de la date en objet Date pour chaque réservation
-    const reservationsAvecDate = data.map((reservation) => ({
+    const reservationsAvecDate = dataFiltrees.map((reservation) => ({
       ...reservation,
       Date: new Date(reservation.date),
     }));
+    console.log("datafiltrée", dataFiltrees);
+    console.log("reservation.date", reservations.date);
     const reservationsValides = reservationsAvecDate.filter(
       (reservation) => !isNaN(reservation.Date.getTime())
     );
@@ -70,6 +82,13 @@ export default function ReservationClient() {
     map[m.id] = m.nom;
     return map;
   }, {});
+
+  // Tri des réservations par nom de matériel
+  const sortedReservations = [...reservations].sort((a, b) => {
+    const nomA = materielMap[a.materielId] || "";
+    const nomB = materielMap[b.materielId] || "";
+    return nomA.localeCompare(nomB);
+  });
 
   const estLeMemeJour = (d1, d2) => {
     return d1.toISOString().slice(0, 10) === d2.toISOString().slice(0, 10);
@@ -100,7 +119,8 @@ export default function ReservationClient() {
       }
     }
   };
-
+  console.log("reservation", reservations);
+  console.log("sortedReservations", sortedReservations);
   return (
     <div>
       <style>{`
@@ -183,7 +203,7 @@ export default function ReservationClient() {
           )}
         />
       </div>
-
+    
       {/* Affichage en overlay du détail des réservations pour la date sélectionnée */}
       <Modal
         open={modalOuvert}
@@ -200,16 +220,14 @@ export default function ReservationClient() {
           <ul style={{ listStyle: "none", padding: 0, fontSize: "1.2rem" }}>
             {reservationsSelectionnees.map((res, index) => (
               <li key={res.id || index}>
-                Matériel : {materielMap[res.MaterielId] || res.MaterielId} -
+                Matériel : {materielMap[res.materielId] || res.materielId} -
                 Quantité : {res.quantite || "-"}
               </li>
             ))}
           </ul>
           <Box display="flex" gap={2} justifyContent="normal">
             <Button
-              onClick={() =>
-                handleCancelReservation(reservationsSelectionnees[0].id)
-              }
+              onClick={() => handleCancelReservation(reservationsSelectionnees[0].id)}
               color="error"
               variant="contained"
               sx={{ mt: 2, fontSize: "1rem" }}
