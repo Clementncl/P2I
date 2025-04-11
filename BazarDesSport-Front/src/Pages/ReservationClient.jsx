@@ -123,17 +123,31 @@ export default function Reservation() {
   console.log("sortedReservations", sortedReservations);
   return (
     <div>
-      <style>{`
+    <style>{`
+        /* Style surchargé pour react-calendar */
+        .react-calendar {
+          width: 100%; 
+          max-width: 800px; /* Augmente la largeur du calendrier */
+          margin: auto;   /* Centre le calendrier */
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 1rem;
+          line-height: 1.125em;
+        }
+        .react-calendar__navigation button {
+          min-width: 44px;
+          background: none;
+          font-size: 1.2rem;
+          margin: 0 2px;
+        }
+        .react-calendar__tile {
+          padding: 10px 6.6667px;
+          background: white;
+        }
         .jour-reservation {
           background-color: rgb(144, 72, 216) !important;
           border-radius: 0%;
         }
-        .calendrier__tile--courant {
-          background-color: white !important;
-        }
-        .calendrier__tile--adjacent {
-          color: grey !important;
-        }
+     
       `}</style>
       <TitrePage titre="Mes Réservations" />
       <div style={{ display: "flex", justifyContent: "center" }}>

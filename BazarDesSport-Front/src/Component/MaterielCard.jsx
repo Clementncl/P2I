@@ -14,7 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import SwipeableEdgeDrawer from "./Swipeableedge";
 
-export default function MaterialCard({ id, nom, image, stock }) {
+export default function MaterialCard({ id, nom, image, stock, admin }) {
   const [showEdit, setShowEdit] = useState(false);
   const [newStock, setNewStock] = useState(stock);
   const [openReservation, setOpenReservation] = useState(false);
@@ -83,6 +83,7 @@ export default function MaterialCard({ id, nom, image, stock }) {
           </Typography>
         </CardContent>
       </CardActionArea>
+      
       <CardActions
         sx={{ flexDirection: "column", alignItems: "stretch", gap: 1 }}
       >
@@ -94,7 +95,7 @@ export default function MaterialCard({ id, nom, image, stock }) {
         )}
 
         {/* Boutons "Modifier" et "Supprimer"  */}
-        {!showEdit && (
+        {admin && (
           <Box
             sx={{
               display: "flex",
@@ -129,6 +130,8 @@ export default function MaterialCard({ id, nom, image, stock }) {
         )}
 
         {/* Affichage de l'édition du stock */}
+        
+          
         {showEdit && (
           <Box
             sx={{
@@ -183,4 +186,5 @@ MaterialCard.propTypes = {
   nom: PropTypes.string.isRequired,
   image: PropTypes.string,
   stock: PropTypes.number.isRequired,
+  admin: PropTypes.bool.isRequired,
 };
