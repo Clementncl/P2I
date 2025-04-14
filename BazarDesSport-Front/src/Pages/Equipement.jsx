@@ -36,7 +36,7 @@ export default function Equipement() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          // Les champs attendus par Materiel ou MaterielDTO
+          // Les champs attendus par Materiel 
           nom: newNom,
           stock: parseInt(newStock),
           prix: parseFloat(newPrix),

@@ -34,7 +34,7 @@ export default function MaterialCard({ id, nom, image, stock, admin }) {
           nom: nom,
           stock: parseInt(newStock),
           prix: 0,
-          type: 0, // ou la valeur adaptée
+          type: 0, 
         }),
       });
       if (response.ok) {
@@ -72,7 +72,6 @@ export default function MaterialCard({ id, nom, image, stock, admin }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
-        {console.log("image", image)}
         <CardMedia component="img" height="140" image={image} alt={nom} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -83,7 +82,7 @@ export default function MaterialCard({ id, nom, image, stock, admin }) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      
+
       <CardActions
         sx={{ flexDirection: "column", alignItems: "stretch", gap: 1 }}
       >
@@ -130,8 +129,7 @@ export default function MaterialCard({ id, nom, image, stock, admin }) {
         )}
 
         {/* Affichage de l'édition du stock */}
-        
-          
+
         {showEdit && (
           <Box
             sx={{

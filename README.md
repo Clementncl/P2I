@@ -1,18 +1,25 @@
 # P2I
+ 
 ## Pour le back
- 1) cd ApiBazarDesSport
- 2) dotnet tool install --global dotnet-ef
- 3) dotnet add package Microsoft.EntityFrameworkCore.Design
- 4) dotnet add package Microsoft.EntityFrameworkCore.Sqlite
- 5) mongosh "mongodb+srv://cnicole:P2Ipassword2025@bds.a652h.mongodb.net/?retryWrites=true&w=majority&appName=BDS"
+ 1) cd P2I
+ 2) cd ApiBazarDesSport
+ 3) dotnet tool install --global dotnet-ef
+ 4) dotnet add package Microsoft.EntityFrameworkCore.Design
  5) dotnet run 
+ 6) Ctrl + Click sur "http://localhost:5039" puis ajouter "/swagger" pour visualiser le swagger
 
 
 ## Pour le front 
- 1) cd BazarDesSport-front
- 2) npm install
- 3) npm install @mui/material @emotion/react @emotion/styled @mui/styled-engine-sc styled-components @mui/icons-material
- 4) npm install react-router-dom
- 6) npm install react-calendar
- 5) npm run dev
- 6) Ctrl + Click sur " http://localhost:5173/"
+ 1) cd P2I
+ 2) cd BazarDesSport-front
+ 3) npm install
+ 4) npm run dev
+ 7) Ctrl + Click sur " http://localhost:5173/"
+
+ ## Une fois sur le site
+
+Pour se connecter en temps qu'admin :  ID = admin@admin.fr
+                                       Mdp = 123
+
+Pour se connecter en temps qu'utilisateur test :  ID = test@test.fr
+                                                  Mdp = 123

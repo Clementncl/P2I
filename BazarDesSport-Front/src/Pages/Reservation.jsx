@@ -47,7 +47,6 @@ export default function Reservation() {
       `http://localhost:5039/api/reservation/Mensuelle?mois=${mois}&an=${annee}`
     );
     const data = await response.json();
-    console.log("données", data);
 
     const reservationsAvecDate = data.map((reservation) => ({
       ...reservation,
@@ -55,7 +54,6 @@ export default function Reservation() {
     }));
     // Conversion de la date en objet Date pour chaque réservation
 
-    console.log("reservation.date", reservations.date);
     const reservationsValides = reservationsAvecDate.filter(
       (reservation) => !isNaN(reservation.Date.getTime())
     );
@@ -153,7 +151,7 @@ export default function Reservation() {
   console.log("sortedReservations", sortedReservations);
   return (
     <div>
-        <style>{`
+      <style>{`
         /* Style surchargé pour react-calendar */
         .react-calendar {
           width: 100%; 
@@ -289,7 +287,7 @@ export default function Reservation() {
                   </td>
                   <td style={{ textAlign: "center" }}>
                     <Button
-                      onClick={() => handleCancelReservation(reservation.id)}
+                      onClick={() => handleDelete(reservation.id)}
                       color="error"
                       variant="contained"
                       startIcon={<DeleteIcon />}
@@ -329,7 +327,9 @@ export default function Reservation() {
           </ul>
           <Box display="flex" gap={2} justifyContent="normal">
             <Button
-              onClick={() => handleDelete(reservationsSelectionnees[0].id)}
+              onClick={() =>
+                handleCancelReservation(reservationsSelectionnees[0].id)
+              }
               color="error"
               variant="contained"
               sx={{ mt: 2, fontSize: "1rem" }}

@@ -10,7 +10,7 @@ using MongoDB.Driver;
 [Route("api/reservation")]
 public class ReservationController : ControllerBase
 {
-    private readonly IMongoCollection<Reservation> _context;  //Chat
+    private readonly IMongoCollection<Reservation> _context;  
 
     public ReservationController(MongoDBService mongoDBService)
     {

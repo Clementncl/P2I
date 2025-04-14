@@ -31,9 +31,7 @@ export default function Reservation() {
     loadReservations();
   }, [date]);
 
-  useEffect(() => {
-    console.log("reservations mises à jour", reservations);
-  }, [reservations]);
+  useEffect(() => {}, [reservations]);
 
   useEffect(() => {
     loadMateriels();
@@ -46,10 +44,8 @@ export default function Reservation() {
       `http://localhost:5039/api/reservation/Mensuelle?mois=${mois}&an=${annee}`
     );
     const data = await response.json();
-    console.log("données", data);
 
     const userId = localStorage.getItem("userId"); // Récupération de l'ID de l'utilisateur connecté
-    console.log("User ID connecté :", userId);
 
     // Filtrage des réservations pour l'utilisateur connecté
     const dataFiltrees = data.filter(
@@ -60,8 +56,6 @@ export default function Reservation() {
       ...reservation,
       Date: new Date(reservation.date),
     }));
-    console.log("datafiltrée", dataFiltrees);
-    console.log("reservation.date", reservations.date);
     const reservationsValides = reservationsAvecDate.filter(
       (reservation) => !isNaN(reservation.Date.getTime())
     );
@@ -123,7 +117,7 @@ export default function Reservation() {
   console.log("sortedReservations", sortedReservations);
   return (
     <div>
-    <style>{`
+      <style>{`
         /* Style surchargé pour react-calendar */
         .react-calendar {
           width: 100%; 
@@ -217,7 +211,7 @@ export default function Reservation() {
           )}
         />
       </div>
-    
+
       {/* Affichage en overlay du détail des réservations pour la date sélectionnée */}
       <Modal
         open={modalOuvert}
@@ -241,7 +235,9 @@ export default function Reservation() {
           </ul>
           <Box display="flex" gap={2} justifyContent="normal">
             <Button
-              onClick={() => handleCancelReservation(reservationsSelectionnees[0].id)}
+              onClick={() =>
+                handleCancelReservation(reservationsSelectionnees[0].id)
+              }
               color="error"
               variant="contained"
               sx={{ mt: 2, fontSize: "1rem" }}

@@ -15,7 +15,6 @@ import ReservationClient from "./Pages/ReservationClient";
 import EquipementClient from "./Pages/EquipementClient";
 function App() {
   const role = localStorage.getItem("userRole");
-  console.log("role utilisateur :", localStorage.getItem("userRole"));
 
   return (
     <Router>

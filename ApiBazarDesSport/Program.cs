@@ -39,9 +39,9 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionHandler("/error");
 
 app.UseRouting();
-app.UseAuthorization(); // Facultatif si pas d'authentification
+app.UseAuthorization(); 
 
 app.MapControllers();
 
-// ✅ Lancement de l'API sur un port différent de React
+// Lancement de l'API sur un port différent de React
 app.Run("http://localhost:5039");

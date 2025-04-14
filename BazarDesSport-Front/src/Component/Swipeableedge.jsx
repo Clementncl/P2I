@@ -48,10 +48,7 @@ function SwipeableEdgeDrawer({ window, materielId, utilisateurId }) {
     window !== undefined ? () => window().document.body : undefined;
 
   const handleReservation = async () => {
-    // Vérifiez que materielId et utilisateurId ne sont pas vides
-    {
-      console.log(materielId, utilisateurId);
-    }
+
 
     try {
       const response = await fetch("http://localhost:5039/api/reservation", {
